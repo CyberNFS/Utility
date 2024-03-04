@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Utility Website{% endblock %}</title>
+    <style>
+        nav {
+            background-color: #b0c4de; /* Navbar background */
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline-block;
+        }
+        nav ul li a {
+            display: block;
+            padding: 10px;
+            background-color: #274175; /* Button background */
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ffffff; /* White border */
+            border-radius: 5px; /* Rounded corners */
+            margin: 5px;
+        }
+        nav ul li a:hover {
+            background-color: #016AE3; /* Hover background */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content overridden in child templates -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>

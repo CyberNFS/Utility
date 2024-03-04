@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <header>
-        <!-- Navigation bar, Logo, etc. -->
-    </header>
+{% extends 'Review/base.html' %}
+{% load staticfiles %}
 
-    <main>
-        <!-- Content of your homepage -->
-        <h1>Welcome to Utility Website</h1>
-        <!-- Add more structure such as filters, top reviews, etc. -->
-    </main>
+{% block title %}Home | Utility Website{% endblock %}
 
-    <footer>
-        <!-- Footer content -->
-    </footer>
-</body>
-</html>
+{% block content %}
+    <h1>Welcome to the Utility Website</h1>
+    <!-- Page-specific content here -->
+{% endblock %}
