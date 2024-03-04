@@ -10,10 +10,16 @@
     <style>
         nav {
             background-color: #b0c4de; /* Navbar background */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
         }
         nav ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
+            display: flex;
         }
         nav ul li {
             display: inline-block;
@@ -25,19 +31,28 @@
             color: white;
             text-decoration: none;
             border: 1px solid #ffffff; /* White border */
-            border-radius: 5px; /* Rounded corners */
             margin: 5px;
+            transition: background-color 0.3s;
         }
         nav ul li a:hover {
             background-color: #016AE3; /* Hover background */
         }
+        nav ul li:last-child a {
+            border-radius: 50%; /* Makes the link circular */
+            padding: 10px; /* Adjust size as needed */
+        }
     </style>
+
+
 </head>
 <body>
     <header>
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'buildings' %}">Buildings</a></li>
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
 
             </ul>
         </nav>
