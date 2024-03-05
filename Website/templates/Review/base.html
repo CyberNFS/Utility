@@ -41,6 +41,21 @@
             border-radius: 50%; /* Makes the link circular */
             padding: 10px; /* Adjust size as needed */
         }
+        .btn-small {
+            display: inline-block;
+            padding: 2px 5px; /* Smaller padding for smaller buttons */
+            background-color: white; /* White background */
+            color: #274175; /* Dark text for contrast */
+            text-decoration: none;
+            border: 1px solid #274175; /* Subtle border */
+            margin: 2px;
+            transition: background-color 0.3s;
+            border-radius: 3px; /* Slightly rounded corners */
+        }
+        .btn-small:hover {
+            background-color: #d3d3d3; /* Greyish on hover */
+            color: #274175; /* Maintain text color on hover */
+        }
     </style>
 
 
@@ -49,11 +64,14 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'buildings' %}">Buildings</a></li>
-                <li><a href="{% url 'gallery' %}">Gallery</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                {% else %}
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'buildings' %}">Buildings</a></li>
+                    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

@@ -1,0 +1,13 @@
+{% extends 'Review/base.html' %}
+
+{% block title %}<strong>Building</strong>{% endblock %}
+
+{% block content %}
+<h2>Profile</h2>
+<!-- Content specific to the  page -->
+<a href="{% url 'upload_media' %}" class="btn-small">Upload Media</a>
+    <!-- {% if user.is_authenticated %} -->
+
+    <!-- {% endif %} -->
+
+{% endblock %}

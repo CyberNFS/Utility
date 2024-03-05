@@ -25,3 +25,38 @@ def register(request):
 def gallery(request):
     context = {}
     return render(request, 'Review/gallery.html', context)
+
+
+def building_profile(request):
+    context = {}
+    return render(request, 'Review/building_profile.html', context)
+
+
+@login_required
+def new_building(request):
+    context = {}
+    return render(request, 'Review/new_building.html', context)
+
+
+@login_required
+def new_level(request):
+    context = {}
+    return render(request, 'Review/new_level.html', context)
+
+
+@login_required
+def new_room(request):
+    context = {}
+    return render(request, 'Review/new_room.html', context)
+
+
+@login_required
+def profile(request):
+    context = {}
+    return render(request, 'Review/profile.html', context)
+
+
+@login_required
+def upload_media(request):
+    context = {}
+    return render(request, 'Review/upload_media.html', context)
