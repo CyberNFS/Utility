@@ -1,46 +1,41 @@
 {% extends 'Review/base.html' %}
+{% load staticfiles %}
 
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
-<h2>Profile</h2>
-<!-- Content specific to the  page -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Comment</button>
-</form>
+    <h2>Profile</h2>
+    <!-- Content specific to the  page -->
 
-
-{% endblock %}
-
-{% extends 'Review/base.html' %}
-
-{% block content %}
-<h2>Profile</h2>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Comment</button>
-</form>
-
-<div id="comments">
-    <h3>Your Comments:</h3>
-    {% for comment in comments %}
-    <div class="comment">
-        <p>{{ comment.text }}</p> <!-- Display the comment text -->
-        <!-- Add more details if needed -->
+    <div>
+        <img src = "{{ MEDIA_URL }}cat.jpg" alt = "Profile Picture" />
     </div>
-    {% empty %}
-    <p>No comments yet.</p>
-    {% endfor %}
-</div>
 
-<a href="{% url 'upload_media' %}" class="btn-small">Upload Media</a>
-    <!-- {% if user.is_authenticated %} -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Comment</button>
+    </form>
 
-    <!-- {% endif %} -->
+
+    <div id="comments">
+        <h3>Your Comments:</h3>
+
+        {% for comment in comments %}
+            <div class="comment">
+                <p>{{ comment.text }}</p> <!-- Display the comment text -->
+            <!-- Add more details if needed -->
+            </div>
+
+            {% empty %}
+                <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'upload_media' %}" class="btn-small">Upload Media</a>
+        <!-- {% if user.is_authenticated %} -->
+
+        <!-- {% endif %} -->
 
 
 {% endblock %}

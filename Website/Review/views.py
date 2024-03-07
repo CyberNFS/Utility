@@ -64,17 +64,23 @@ from .models import Comment
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
+#@login_required
 def profile(request):
-    # This view now requires the user to be logged in
-    if request.user.is_authenticated:
-        user_comments = Comment.objects.filter(user=request.user)
-        context = {'comments': user_comments}
-        return render(request, 'profile.html', context)
-    else:
-        return redirect('login')
 
-    return render(request, 'Review/profile.html', context)
+    #user_comments = Comment.objects.filter(user = request.user)
+    #context = {"comments": user_comments}
+
+    return render(request, 'Review/profile.html')
+
+    # This view now requires the user to be logged in
+    #if request.user.is_authenticated:
+        #user_comments = Comment.objects.filter(user=request.user)
+        #context = {'comments': user_comments}
+        #return render(request, 'profile.html', context)
+    #else:
+        #return redirect('login')
+
+    #return render(request, 'Review/profile.html', context)
 
 
 # @login_required
