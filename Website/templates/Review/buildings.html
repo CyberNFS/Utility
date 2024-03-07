@@ -5,11 +5,16 @@
 {% block content %}
 <h2>Buildings Page</h2>
 <!-- Content specific to the Buildings page -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
 
-    {% if user.is_authenticated %}
+    <!-- {% if user.is_authenticated %} -->
         <a href="{% url 'new_building' %}" class="btn-small">Add a new Facility</a>
-    {% else %}
+    <!-- {% else %} -->
         <a href="{% url 'building_profile' %}" class="btn-small">Building</a>
-    {% endif %}
+    <!-- {% endif %} -->
 
 {% endblock %}

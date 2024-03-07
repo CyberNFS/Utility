@@ -3,10 +3,16 @@
 {% block title %}<strong>Level | Building</strong>{% endblock %}
 
 {% block content %}
-<h2>Level</h2>
-<!-- Content specific to the  page -->
-    {% if user.is_authenticated %}
-        <a href="{% url 'new_room' %}" class="btn-small">Add a new Room</a>
-    {% endif %}
+    <h2>Level</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Comment</button>
+    </form>
+
+    <!-- Content specific to the  page -->
+        <!-- {% if user.is_authenticated %} -->
+    <a href="{% url 'new_room' %}" class="btn-small">Add a new Room</a>
+        <!-- {% endif %} -->
 
 {% endblock %}

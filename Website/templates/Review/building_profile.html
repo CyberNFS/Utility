@@ -1,11 +1,18 @@
 {% extends 'Review/base.html' %}
 
-{% block title %}<strong>Building</strong>{% endblock %}
+{% block title %}Building{% endblock %}
 
 {% block content %}
 <h2>Building</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Comment</button>
+</form>
+
 <!-- Content specific to the  page -->
-    {% if user.is_authenticated %}
-    <a href="{% url 'new_level' %}" class="btn-small">Add a new Level</a>
-    {% endif %}
+<a href="{% url 'new_level' %}" class="btn-small">Add a new Level</a>
+    <!-- {% if user.is_authenticated %} -->
+
+    <!-- {% endif %} -->
 {% endblock %}

@@ -5,5 +5,11 @@
 {% block content %}
 <h2>Room</h2>
 <!-- Content specific to the  page -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Comment</button>
+</form>
+
 
 {% endblock %}

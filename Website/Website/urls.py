@@ -30,6 +30,6 @@ urlpatterns = [
     path('new_building/', views.new_building, name='new_building'),
     path('new_room/', views.new_room, name='new_room'),
     path('new_level/', views.new_level, name='new_level'),
-    path('profile', views.profile, name='profile'),
-    path('upload_media', views.upload_media, name='upload_media'),
+    path('profile/', views.profile, name='profile'),
+    path('upload_media', views.upload_media, name='upload_media')
 ]
