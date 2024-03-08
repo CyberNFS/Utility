@@ -1,0 +1,21 @@
+{% extends 'Review/base.html' %}
+
+{% block title %}Comment{% endblock %}
+
+{% block content %}
+<h2>Comment</h2>
+<form id="comment_form" method="post" action="Review/comment">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text }}
+        {{ field }}
+    {% endfor %}
+    <button type="submit">Submit Comment</button>
+</form>
+
+
+{% endblock %}

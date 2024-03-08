@@ -1,16 +1,18 @@
 from django import forms
+from .models import Comment
 
 
-class CommentForm(forms.Form):
-    name = forms.CharField()
-    url = forms.URLField()
-    comment = forms.CharField(widget=forms.Textarea)
+class CommentForm(forms.ModelForm):
+    comment = forms.CharField(label="", widget=forms.Textarea(
+        attrs={
+            'class': 'form_control',
+            'placeholder': 'Comment here!',
+            'rows': 4,
+            'cols': 50
 
+        }))
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
-class UserRegistrationForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    # Add other fields as necessary
-
-    # Optionally, include email, first_name, last_name, etc.
-    email = forms.EmailField()
+    class Meta:
+        model = Comment
+        fields = ['comment']

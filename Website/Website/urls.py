@@ -34,6 +34,8 @@ urlpatterns = [
     path('new_room/', views.new_room, name='new_room'),
     path('new_level/', views.new_level, name='new_level'),
     path('profile/', views.profile, name='profile'),
-    path('upload_media', views.upload_media, name='upload_media')
-
+    path('upload_media', views.upload_media, name='upload_media'),
+    # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    path('register/', views.register, name='register'),
+    path('comment/', views.comment, name='comment'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

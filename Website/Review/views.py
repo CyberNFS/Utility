@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 from .forms import CommentForm
 from .models import Comment
 
@@ -10,7 +12,20 @@ def home(request):
 
 
 def buildings(request):
-    context = {}
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+
+            Comment.objects.create(
+                user=request.user,
+                text=comment_form.cleaned_data['comment'],
+                building_id=comment_form.cleaned_data['building_id']
+            )
+            return redirect('buildings')
+    else:
+        comment_form = CommentForm()
+
+    context = {'comment_form': comment_form}
     return render(request, 'Review/buildings.html', context)
 
 
@@ -20,8 +35,25 @@ def login(request):
 
 
 def register(request):
-    context = {}
-    return render(request, 'Review/register.html', context)
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            # Create a new user object but avoid saving it yet
+            new_user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password'],
+                # Include other fields as needed
+                email=form.cleaned_data['email']
+            )
+            new_user.save()
+            # Log the user in and redirect them
+            login(request, new_user)
+            # Redirect to a new page after registration
+            return redirect('some_view')
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'register.html', {'form': form})
 
 
 def gallery(request):
@@ -87,3 +119,16 @@ def profile(request):
 def upload_media(request):
     context = {}
     return render(request, 'Review/upload_media.html', context)
+
+
+def comment(request):
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        # validity check
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/home/')
+        else:
+            print(form.errors)
+    return render(request, 'Review/comment.html', {'form': form})
