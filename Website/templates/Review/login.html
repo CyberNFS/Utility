@@ -1,10 +1,11 @@
 {% extends 'Review/base.html' %}
 
-{% block title %}Login | Utility Website{% endblock %}
-
 {% block content %}
-<h2>Login Page</h2>
-<!-- Content specific to the Login page -->
-<!-- FORM -->
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
 <a href="{% url 'register' %}" class="btn-small">Register</a>
 {% endblock %}

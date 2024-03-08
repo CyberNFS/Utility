@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from .forms import CommentForm
+from django.contrib.auth import login as auth_login
+from .forms import CommentForm, RegistrationForm
 from .models import Comment
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def home(request):
@@ -30,13 +32,20 @@ def buildings(request):
 
 
 def login(request):
-    context = {}
-    return render(request, 'Review/login.html', context)
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('profile')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'Review/login.html', {'form': form})
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             # Create a new user object but avoid saving it yet
             new_user = User.objects.create_user(
@@ -51,9 +60,9 @@ def register(request):
             # Redirect to a new page after registration
             return redirect('some_view')
     else:
-        form = UserRegistrationForm()
+        form = RegistrationForm()
 
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'Review/register.html', {'form': form})
 
 
 def gallery(request):
@@ -105,14 +114,14 @@ def profile(request):
     return render(request, 'Review/profile.html')
 
     # This view now requires the user to be logged in
-    #if request.user.is_authenticated:
-        #user_comments = Comment.objects.filter(user=request.user)
-        #context = {'comments': user_comments}
-        #return render(request, 'profile.html', context)
-    #else:
-        #return redirect('login')
+    # if request.user.is_authenticated:
+    #user_comments = Comment.objects.filter(user=request.user)
+    #context = {'comments': user_comments}
+    # return render(request, 'profile.html', context)
+    # else:
+    # return redirect('login')
 
-    #return render(request, 'Review/profile.html', context)
+    # return render(request, 'Review/profile.html', context)
 
 
 # @login_required

@@ -4,5 +4,9 @@
 
 {% block content %}
 <h2>Registration</h2>
-<!-- Content specific to the page -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
 {% endblock %}
