@@ -64,17 +64,16 @@
     <header>
         <nav>
             <ul>
-                <!-- {% if user.is_authenticated %} -->
-
-                <!-- {% else %} -->
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'buildings' %}">Buildings</a></li>
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                {% if user.is_authenticated %}
                     <li><a href="{% url 'profile' %}">Profile</a></li>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-
-                    <li><a href="{% url 'buildings' %}">Buildings</a></li>
-                    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
 
-                <!-- {% endif %} -->
             </ul>
         </nav>
     </header>

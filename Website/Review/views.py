@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
 from .forms import CommentForm, RegistrationForm
 from .models import Comment
@@ -31,7 +31,7 @@ def buildings(request):
     return render(request, 'Review/buildings.html', context)
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -43,6 +43,12 @@ def login(request):
     return render(request, 'Review/login.html', {'form': form})
 
 
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+    return redirect('home')
+
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -50,7 +56,7 @@ def register(request):
             # Create a new user object but avoid saving it yet
             new_user = User.objects.create_user(
                 username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
+                password=form.cleaned_data['password1'],
                 # Include other fields as needed
                 email=form.cleaned_data['email']
             )
@@ -58,7 +64,7 @@ def register(request):
             # Log the user in and redirect them
             login(request, new_user)
             # Redirect to a new page after registration
-            return redirect('some_view')
+            return redirect('profile')
     else:
         form = RegistrationForm()
 
