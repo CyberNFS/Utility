@@ -147,3 +147,6 @@ def comment(request):
         else:
             print(form.errors)
     return render(request, 'Review/comment.html', {'form': form})
+
+def about(request):
+    return render(request, 'Review/about.html')

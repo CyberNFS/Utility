@@ -39,4 +39,5 @@ urlpatterns = [
     # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('register/', views.register, name='register'),
     path('comment/', views.comment, name='comment'),
+    path('about/', views.about, name='about'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

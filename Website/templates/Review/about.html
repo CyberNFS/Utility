@@ -1,0 +1,62 @@
+{% extends "Review/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="about-section">
+    <h2>About Us</h2>
+    <p>
+      Welcome to our About page. Here you can find information about our company, our values, and our team.
+    </p>
+    <!-- ... other content ... -->
+  </div>
+
+  <!-- Team Members Section -->
+  <div class="team-section">
+    <h2>Meet Our Team</h2>
+    <div class="team-members">
+      
+      <!-- Team Member -->
+      <div class="team-member">
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Member 1" class="team-photo">
+        <div class="member-info">
+          <h3>Joan</h3>
+          <p>Hi my names Joan I am studying the Electronic and Software Engineering course.</p>
+        </div>
+      </div>
+
+      <!-- Repeat for each team member -->
+      <div class="team-member">
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Member 2" class="team-photo">
+        <div class="member-info">
+          <h3>Arman</h3>
+          <p>Hi my names Arman I am studying the Electronic and Software Engineering course.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Member 1" class="team-photo">
+        <div class="member-info">
+          <h3>Gabriel</h3>
+          <p>Hi my names Gabriel I am studying the Computer Science course.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Member 1" class="team-photo">
+        <div class="member-info">
+          <h3>Yang</h3>
+          <p>Hi my names Yang I am studying the Computer Science course.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Member 1" class="team-photo">
+        <div class="member-info">
+          <h3>Rhys</h3>
+          <p>Hi my names Rhys I am studying the Computer Science course.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
