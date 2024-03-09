@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
-from .forms import CommentForm, RegistrationForm
-from .models import Comment
+from .forms import CommentForm, RegistrationForm, BuildingForm
+from .models import Comment, Building
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -17,7 +17,6 @@ def buildings(request):
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-
             Comment.objects.create(
                 user=request.user,
                 text=comment_form.cleaned_data['comment'],
@@ -26,8 +25,8 @@ def buildings(request):
             return redirect('buildings')
     else:
         comment_form = CommentForm()
-
-    context = {'comment_form': comment_form}
+    buildings = Building.objects.all()
+    context = {'comment_form': comment_form, 'buildings': buildings}
     return render(request, 'Review/buildings.html', context)
 
 
@@ -76,22 +75,29 @@ def gallery(request):
     return render(request, 'Review/gallery.html', context)
 
 
-def building_profile(request):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            # Process the form data, save the comment, etc.
-            return redirect('some-view-name')
-    else:
-        form = CommentForm()
-    context = {'form': form}
-    return redirect('profile')
+def building_profile(request, slug):
+    building = get_object_or_404(Building, slug=slug)
+    context = {
+        'building': building,
+        # 'comments': comments,  # Uncomment if you're including comments
+    }
+    return render(request, 'Review/building_profile.html', context)
 
 
 # @login_required
+
+
 def new_building(request):
-    context = {}
-    return render(request, 'Review/new_building.html', context)
+    if request.method == 'POST':
+        form = BuildingForm(request.POST, request.FILES)
+        if form.is_valid():
+            building = form.save(commit=False)
+            # You can add additional processing here if needed
+            building.save()
+            return redirect('buildings')
+    else:
+        form = BuildingForm()
+    return render(request, 'Review/new_building.html', {'form': form})
 
 
 # @login_required
@@ -147,6 +153,7 @@ def comment(request):
         else:
             print(form.errors)
     return render(request, 'Review/comment.html', {'form': form})
+
 
 def about(request):
     return render(request, 'Review/about.html')

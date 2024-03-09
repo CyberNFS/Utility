@@ -7,6 +7,12 @@
 <!-- Content specific to the Buildings page -->
     {% for building in buildings %}
     <!-- Building Information -->
+    <div>
+        <a href="{% url 'building_profile' building.slug %}">
+            <img src="{{ building.image.url }}" class = building-picture alt="{{ building.name }}">
+            <p>{{ building.name }}</p>
+        </a>
+    </div>
         <form method="post" action="{% url 'buildings' %}">
             {% csrf_token %}
             {{ comment_form.as_p }}
@@ -15,6 +21,8 @@
             <button type="submit">Submit Comment</button>
         </form>
     {% endfor %}
+
+
 
     <!-- {% if user.is_authenticated %} -->
         <a href="{% url 'new_building' %}" class="btn-small">Add a new Facility</a>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Building
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -38,3 +38,10 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class BuildingForm(forms.ModelForm):
+    class Meta:
+        model = Building
+        fields = ['name', 'description', 'image',
+                  'google_map', 'instagram', 'website']

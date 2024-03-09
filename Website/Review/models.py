@@ -49,19 +49,23 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.author.username} : {self.title}'
 
+
 class Building(models.Model):
     name = models.CharField(max_length=255)
-    google_map = models.CharField(max_length=255)
-    instagram = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="building_images", blank=True)
-    description = models.TextField()
+    description = models.TextField(default='')
+    image = models.ImageField(
+        upload_to="building_images", blank=True, null=True)
+    google_map = models.CharField(max_length=255, default='')
+    instagram = models.CharField(max_length=255, default='')
+    website = models.CharField(max_length=255, default='')
+    # Allowing null for image field
+
     date_added = models.DateTimeField(default=timezone.now)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, default='')
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):

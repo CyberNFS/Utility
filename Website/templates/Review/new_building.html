@@ -1,14 +1,16 @@
 {% extends 'Review/base.html' %}
-
-{% block title %}<strong>Add Building</strong>{% endblock %}
-
+{% block title %}Add Building{% endblock %}
 {% block content %}
 <h2>Add a new Facility</h2>
-<!-- Content specific to the  page -->
+
 
     Please review the already existing <a href="{% url 'buildings' %}" class="btn-small">Buildings</a> before creating a new facility.
     Someone might have already added the facility and you could create a Room or Level within that Facility to help others in a more
     detailed manner.
 
-
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Building</button>
+</form>
 {% endblock %}

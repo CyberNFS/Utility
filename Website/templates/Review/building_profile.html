@@ -1,18 +1,17 @@
 {% extends 'Review/base.html' %}
 
-{% block title %}Building{% endblock %}
+{% block title %}{{ building.name }}{% endblock %}
 
 {% block content %}
-<h2>Building</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Comment</button>
-</form>
+<h2>{{ building.name }}</h2>
+<div>
+    <img src="{{ building.image.url }}" class="building-picture" alt="{{ building.name }}" style="max-width: 100%; height: auto;">
+    <p>Description: {{ building.description }}</p>
+    <p><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
+    <p><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
+    <p><a href="{{ building.website }}" target="_blank">Website</a></p>
+</div>
 
-<!-- Content specific to the  page -->
 <a href="{% url 'new_level' %}" class="btn-small">Add a new Level</a>
-    <!-- {% if user.is_authenticated %} -->
 
-    <!-- {% endif %} -->
 {% endblock %}
