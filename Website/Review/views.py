@@ -146,7 +146,9 @@ def comment(request):
         form = CommentForm(request.POST)
         # validity check
         if form.is_valid():
-            form.save(commit=True)
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.save()
             return redirect('/home/')
         else:
             print(form.errors)

@@ -41,7 +41,10 @@ class Comment(models.Model):
         Building, on_delete=models.CASCADE, related_name='comments', null=True)
 
     def __str__(self):
-        return f'Comment by {self.author.username} on {self.building.name}'
+        if self.building is not None:
+            return f'Comment by {self.author.username} on {self.building.name}'
+        else:
+            return f'Comment by {self.author.username} without a building'
 
 
 class Profile(models.Model):

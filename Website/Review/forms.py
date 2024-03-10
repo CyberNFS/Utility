@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class CommentForm(forms.ModelForm):
-    comment = forms.CharField(label="", widget=forms.Textarea(
+    text = forms.CharField(label="", widget=forms.Textarea(
         attrs={
             'class': 'form_control',
             'placeholder': 'Comment here!',
@@ -17,7 +17,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['text', 'likes']
 
 
 class RegistrationForm(UserCreationForm):
