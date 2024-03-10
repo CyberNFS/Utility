@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
 class Building(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(default='')
@@ -54,7 +55,8 @@ class Profile(models.Model):
     name = models.CharField(max_length=80)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile', null=True)
-    picture = models.ImageField(upload_to="profile_images", blank=True)
+    picture = models.ImageField(
+        upload_to="profile_images", blank=True, default=f'Website/mediacat.jpg')
     upvotes = models.IntegerField(default=0)
     images = models.ImageField(upload_to="", blank=True)
     bio = models.CharField(max_length=100)

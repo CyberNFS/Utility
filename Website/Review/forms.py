@@ -1,7 +1,22 @@
 from django import forms
-from .models import Comment, Building
+from .models import Comment, Building, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'picture', 'bio', 'reviews']
+        # labels = {
+        #     'name': 'Full Name',
+        #     'picture': 'Profile Picture',
+        #     'bio': 'Bio',
+        #     'reviews': 'Reviews',
+        # }
+        widgets = {
+            'bio': forms.Textarea(attrs={'rows': 4}),
+        }
 
 
 class CommentForm(forms.ModelForm):

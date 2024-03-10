@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
-from .forms import CommentForm, RegistrationForm, BuildingForm
+from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm
 from .models import Comment, Building, Profile
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -134,7 +134,28 @@ def profile(request):
     # return render(request, 'Review/profile.html', context)
 
 
+@login_required
+def edit_profile(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES,
+                           instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            # Redirect to the profile page or any other page
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'Review/edit_profile.html', {'form': form})
+
 # @login_required
+
+
 def upload_media(request):
     context = {}
     return render(request, 'Review/upload_media.html', context)
