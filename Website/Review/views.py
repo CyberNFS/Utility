@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
 from .forms import CommentForm, RegistrationForm, BuildingForm
-from .models import Comment, Building
+from .models import Comment, Building, Profile
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -17,12 +17,18 @@ def buildings(request):
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            Comment.objects.create(
-                user=request.user,
-                text=comment_form.cleaned_data['comment'],
-                building_id=comment_form.cleaned_data['building_id']
-            )
-            return redirect('buildings')
+            new_comment = comment_form.save(commit=False)
+            new_comment.author = request.user
+            # Ensure 'building_id' is captured and validated before this step
+            building_id = request.POST.get('building_id')
+            if building_id:
+                try:
+                    new_comment.building = Building.objects.get(id=building_id)
+                    new_comment.save()
+                    return redirect('buildings')
+                except Building.DoesNotExist:
+                    # Handle the case where building does not exist
+                    pass
     else:
         comment_form = CommentForm()
     buildings = Building.objects.all()
@@ -84,9 +90,6 @@ def building_profile(request, slug):
     return render(request, 'Review/building_profile.html', context)
 
 
-# @login_required
-
-
 def new_building(request):
     if request.method == 'POST':
         form = BuildingForm(request.POST, request.FILES)
@@ -112,23 +115,18 @@ def new_room(request):
     return render(request, 'Review/new_room.html', context)
 
 
-from django.shortcuts import render, redirect
-from .models import Comment
-from django.contrib.auth.decorators import login_required
-
-
-#@login_required
 def profile(request):
+    # Fetch the comments made by the user and their related profiles
 
-    #user_comments = Comment.objects.filter(user = request.user)
-    #context = {"comments": user_comments}
-
-    return render(request, 'Review/profile.html')
+    user_comments = Comment.objects.select_related(
+        'author__profile').filter(author=request.user)
+    context = {"comments": user_comments}
+    return render(request, 'Review/profile.html', context)
 
     # This view now requires the user to be logged in
     # if request.user.is_authenticated:
-    #user_comments = Comment.objects.filter(user=request.user)
-    #context = {'comments': user_comments}
+    # user_comments = Comment.objects.filter(user=request.user)
+    # context = {'comments': user_comments}
     # return render(request, 'profile.html', context)
     # else:
     # return redirect('login')

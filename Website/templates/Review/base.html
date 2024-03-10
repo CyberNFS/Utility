@@ -80,7 +80,7 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'buildings' %}">Buildings</a></li>
                 <li><a href="{% url 'gallery' %}">Gallery</a></li>
-                <li><a href="{% url 'about' %}">About Us</a></li>
+
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'profile' %}">Profile</a></li>
 
@@ -100,6 +100,7 @@
 
     <footer>
         <!-- Footer content -->
+        <a href="{% url 'about' %}">About Us</a>
     </footer>
 </body>
 </html>

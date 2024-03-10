@@ -20,15 +20,9 @@
 
     <div id="comments">
         <h3>Your Comments:</h3>
+        {% for comment in user.comments %}
 
-        {% for comment in comments %}
-            <div class="comment">
-                <p>{{ comment.text }}</p> <!-- Display the comment text -->
-            <!-- Add more details if needed -->
-            </div>
-
-            {% empty %}
-                <p>No comments yet.</p>
+            <p>{{ comment.text }}</p>
         {% endfor %}
     </div>
 
