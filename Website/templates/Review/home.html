@@ -1,9 +1,23 @@
 {% extends 'Review/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title %}Home | Utility Website{% endblock %}
 
 {% block content %}
+<style type="text/css">
+    .home-background {
+        /* Use the 'static' tag to include an image from your static files */
+        background-image: url('{% static "images/university-of-glasgow.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh; /* This will make sure that the background image covers the full viewport height */
+    }
+</style>
+
+<div class="home-background">
     <h1>Welcome to the Utility Website</h1>
     <!-- Page-specific content here -->
+</div>
 {% endblock %}
