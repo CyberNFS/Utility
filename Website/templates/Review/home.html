@@ -4,5 +4,118 @@
 {% block title %}Home | Utility Website{% endblock %}
 
 {% block content %}
+
+<header class="bg-primary-gradient mb-5">
+    <div class="container pt-4 pt-xl-5">
+        <div class="row pt-5">
+            <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
+                <div class="text-center">
+                    <p> <h4 class="fw-bold text-success mb-2">15D PROJECT<h4></p>
+                    <h1 class="fw-bold">What others have said about where you want to go</h1>
+                </div>
+            </div>
+            <div class="col-12 col-lg-10 mx-auto">
+                <div class="position-relative" style="display: flex;flex-wrap: wrap;justify-content: flex-end;">
+                    <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);">
+                        <img class="img-fluid"  src="/static/img/building1.jpg" /><!--change image -->
+                    </div>
+                    <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);">
+                        <img class="img-fluid"  src="/static/img/building1.jpg" /> <!--change image -->
+                    </div>
+                    <div style="position: relative;flex: 0 0 65%;transform: translate3d(10%, 2%, 0);">
+                        <img class="img-fluid"  src="/static/img/building1.jpg" /><!--change image -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<section>
+    <div class="container bg-primary-gradient py-5 p-3">
+        <div class="row">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-3">TOP</p>
+                <h3 class="fw-bold">Top Glasgow Architecture Reviews</h3>
+            </div>
+        </div>
+        <div class="py-5 p-lg-5">
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col mb-5">
+                    <div class="card shadow">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <div class="bs-icon-lg d-flex justify-content-center"></div>
+                            <h5 class="fw-bold card-title">Gallery </h5><!-- Building name -->    
+                            <p class="text-muted card-text mb-4">Introduction</p><!--enter introduction -->
+                            <a href = "{% url 'gallery' %}"><button class="btn btn-primary shadow" type="button">Learn more</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card shadow">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <div class="bs-icon-lg d-flex justify-content-center"></div>
+                            <h5 class="fw-bold card-title">Buildings2</h5>     <!-- Building name -->      
+                            <p class="text-muted card-text mb-4">Introduction</p>  <!--enter introduction -->
+                            <button class="btn btn-primary shadow" type="button">Learn more</button> <!-- can add link -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <div class="card shadow">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <div class="bs-icon-lg d-flex justify-content-center"></div>
+                            <h5 class="fw-bold">Buildings3 </h5><!-- Building name -->    
+                            <p class="text-muted card-text mb-4">Introduction</p><!--enter introduction -->
+                            <button class="btn btn-primary shadow" type="button">Learn more</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <div class="card shadow">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <div class="bs-icon-lg d-flex justify-content-center align-items-center mb-3 bs-icon" style="top: 1rem;right: 1rem;position: absolute;"></div>
+                            <h5 class="fw-bold card-title">Buildings4</h5><!-- Building name -->    
+                            <p class="text-muted card-text mb-4">Introduction</p><!--enter introduction -->
+                            <button class="btn btn-primary shadow" type="button">Learn more</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="text-center py-5 p-3">
+    <div class="container">
+        <h2 class="mb-5"></h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="mx-auto testimonial-item mb-5 mb-lg-0"><img class="rounded-circle img-fluid mb-3" src="/static/img/building1.jpg" /><!--change image -->
+                    <h5>Most upvoted reviews</h5>
+                    <p class="font-weight-light mb-0">Informantion</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="mx-auto testimonial-item mb-5 mb-lg-0"><img class="rounded-circle img-fluid mb-3" src="/static/img/building1.jpg" /><!--change image -->
+                    <h5>Most recent reviews</h5>
+                    <p class="font-weight-light mb-0">Informantion</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="mx-auto testimonial-item mb-5 mb-lg-0"><img class="rounded-circle img-fluid mb-3" src="/static/img/building1.jpg"/><!--change image -->
+                    <h5>Most upvotes account</h5>
+                    <p class="font-weight-light mb-0">Informantion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
     <!-- Page-specific content here -->
 {% endblock %}

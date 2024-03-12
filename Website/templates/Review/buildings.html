@@ -3,7 +3,63 @@
 {% block title %}Facilities | Utility Website{% endblock %}
 
 {% block content %}
-<h2>Buildings Page</h2>
+
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-2">BUILDING LIST</p>
+                <h2 class="fw-bold">All BUILDING</h2>
+            </div>
+        </div>
+        <div class="row row-cols-2 row-cols-md-3 mx-auto" style="max-width: 700px;">
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>Gallery</strong></h5>
+                    <p class="text-muted mb-2">introduction---------------------------------------------------------------</p>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>John Smith</strong></h5>
+                    <p class="text-muted mb-2">introduction</p>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>John Smith</strong></h5>
+                    <p class="text-muted mb-2">introduction</p>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>John Smith</strong></h5>
+                    <p class="text-muted mb-2">introduction</p>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>John Smith</strong></h5>
+                    <p class="text-muted mb-2">introduction</p>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="text-center">
+                    <a href = "{% url 'gallery' %}"><img class="rounded mb-3 fit-cover" width="175" height="175" src="/static/img/building1.jpg" /></a>
+                    <h5 class="fw-bold mb-0"><strong>John Smith</strong></h5>
+                    <p class="text-muted mb-2">introduction</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Content specific to the Buildings page -->
     {% for building in buildings %}
     <!-- Building Information -->

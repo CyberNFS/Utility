@@ -13,9 +13,9 @@
     <link href = "/static/css/file.css" rel = "stylesheet"/>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
-      <div class="container-fluid">
+  <body style = "background-color:#F6F1EB">
+    <nav class="navbar p-3 navbar-expand-lg navbar-light shadow-sm" >
+      <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">Utility Website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -28,19 +28,21 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'buildings' %}">Buildings</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
-            </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #e3f2fd;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 User
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: #e3f2fd;">
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: #F6F1EB">
                 <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                 <li><a class="dropdown-item" href="{% url 'profile' %}">profile</a></li>
                 <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
               </ul>
             </li>
+
+            <form class="d-flex navbar-right " style = "">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
           </ul>
         </div>
       </div>
@@ -54,6 +56,9 @@
   
     <footer>
       <!-- Footer content -->
+      <div class="container text-center"  >
+        <p>PROJECT - 15D 2024</p>
+    </div>
     </footer>
   </body>
 </html>
