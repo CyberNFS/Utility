@@ -5,37 +5,22 @@
 
 {% block content %}
     <h2>Profile</h2>
-    <!-- Content specific to the  page -->
 
-    <div>
-        <img src = "{{ MEDIA_URL }}cat.jpg" alt = "Profile Picture" />
+    <div class="profile-info">
+        <img src="{{ user.profile.picture.url }}" alt="Profile Picture" class="profile-picture"/>
+        <h3>{{ user.profile.name }}</h3>
+        <p>{{ user.profile.bio }}</p>
     </div>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Comment</button>
-    </form>
-
 
     <div id="comments">
         <h3>Your Comments:</h3>
-
-        {% for comment in comments %}
-            <div class="comment">
-                <p>{{ comment.text }}</p> <!-- Display the comment text -->
-            <!-- Add more details if needed -->
-            </div>
-
-            {% empty %}
-                <p>No comments yet.</p>
+        {% for comment in comments %}  <!-- Make sure to pass 'comments' correctly from the view -->
+            <p>{{ comment.text }}</p>
         {% endfor %}
     </div>
 
     <a href="{% url 'upload_media' %}" class="btn-small">Upload Media</a>
-        <!-- {% if user.is_authenticated %} -->
-
-        <!-- {% endif %} -->
-
+    <a href="{% url 'edit_profile' %}" class="btn-small">Edit Profile</a>
+    <a href="{% url 'logout' %}" class="btn-small">Logout</a>
 
 {% endblock %}

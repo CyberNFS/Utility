@@ -1,11 +1,26 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Building, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'picture', 'bio', 'reviews']
+        # labels = {
+        #     'name': 'Full Name',
+        #     'picture': 'Profile Picture',
+        #     'bio': 'Bio',
+        #     'reviews': 'Reviews',
+        # }
+        widgets = {
+            'bio': forms.Textarea(attrs={'rows': 4}),
+        }
+
+
 class CommentForm(forms.ModelForm):
-    comment = forms.CharField(label="", widget=forms.Textarea(
+    text = forms.CharField(label="", widget=forms.Textarea(
         attrs={
             'class': 'form_control',
             'placeholder': 'Comment here!',
@@ -17,7 +32,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['text', 'likes']
 
 
 class RegistrationForm(UserCreationForm):
@@ -38,3 +53,10 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class BuildingForm(forms.ModelForm):
+    class Meta:
+        model = Building
+        fields = ['name', 'description', 'image',
+                  'google_map', 'instagram', 'website']
