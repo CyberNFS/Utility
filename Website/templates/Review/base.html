@@ -14,7 +14,7 @@
   </head>
 
   <body style = "background-color:#F6F1EB">
-    <nav class="navbar p-3 navbar-expand-lg navbar-light shadow-sm" >
+    <nav class="navbar p-3 navbar-expand-lg navbar-light shadow-sm mb-4" >
       <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">Utility Website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,9 +56,21 @@
   
     <footer>
       <!-- Footer content -->
-      <div class="container text-center"  >
-        <p>PROJECT - 15D 2024</p>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-4"><span class="copyright">PROJECT -- 15D</span></div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <ul class="list-inline quicklinks">
+                    <li class="list-inline-item"><a href="{% url 'about' %}"><button type="button">About us</button></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
     </footer>
   </body>
 </html>
+<!--<a href = "{% url 'about' %}"><button class=" shadow" type="button">About us</button></a>  -->
