@@ -2,16 +2,6 @@
 {% load static %}
 
 {% block content %}
-<<<<<<< Updated upstream
-<h2>Login</h2>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-<a href="{% url 'register' %}" class="btn-small">Register</a>
-=======
    <style type="text/css">
         .login-container {
             width: 100%;
@@ -55,6 +45,5 @@
         </div>
     </div>
 </div>
->>>>>>> Stashed changes
 {% endblock %}
 
