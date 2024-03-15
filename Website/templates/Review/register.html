@@ -1,5 +1,5 @@
 {% extends 'Review/base.html' %}
-
+{% load static %}
 {% block title %}Registration{% endblock %}
 
 {% block content %}
@@ -36,7 +36,7 @@
 }
    </style>
    <div class="template-page-container">
-       <div class="register-container">
+       <div class="register-container profile-background">
            <h2>Registration</h2>
            <form method="post" class="register-form">
                {% csrf_token %}
