@@ -13,7 +13,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-        }
+        }        
 
     </style>
     <div class="template-page-container">
@@ -25,9 +25,9 @@
             <div style="padding: 12px; ">
                 <p>Description: {{ building.description }}</p>
                 <div style="display: flex; justify-content: space-between">
-                    <p><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
-                    <p><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
-                    <p><a href="{{ building.website }}" target="_blank">Website</a></p>
+                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
+                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
+                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.website }}" target="_blank">Website</a></p>
                 </div>
             </div>
         </div>

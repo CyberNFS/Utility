@@ -51,11 +51,9 @@ class Comment(models.Model):
 class Profile(models.Model):
 
     # profile_ID = models.CharField(max_length=100, unique=True)
-    # user_ID = models.CharField(max_length=100, unique=True)
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile', null=True) 
-    #I think this line of code already indicates the foreign key and will do the auto-matching, so no need for user_id
+    # user_ID = models.CharField(max_length=100, unique=True))
     name = models.CharField(max_length=80)
-    user = models.OneToOneField(
+    user = models.OneToOneField( #I think this line of code already indicates the foreign key and will do the auto-matching, so no need for user_id
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile', null=True)
     picture = models.ImageField(
         upload_to="profile_images", blank=True, default=f'Website/mediacat.jpg')
