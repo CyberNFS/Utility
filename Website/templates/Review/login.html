@@ -1,6 +1,8 @@
 {% extends 'Review/base.html' %}
+{% load static %}
 
 {% block content %}
+<<<<<<< Updated upstream
 <h2>Login</h2>
 
 <form method="post">
@@ -9,4 +11,50 @@
     <button type="submit">Login</button>
 </form>
 <a href="{% url 'register' %}" class="btn-small">Register</a>
+=======
+   <style type="text/css">
+        .login-container {
+            width: 100%;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 30px #5f6f7c;
+        }
+        .login-form {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 48px auto;
+        }
+        .login-background {
+            background-image: url('{% static "images/E0000_15.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding-top: 10px;
+            {% comment %} height: 100vh; {% endcomment %}
+            positon: relative;
+        }
+   </style>
+<div >
+    <div class="template-page-container">
+        <div class="login-container login-background">
+            <h2 style="width: 100%">Welcome!</h2>
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="divider"></div>
+                <button type="submit" class="submit-btn" style="width: 100%; border-radius: 8px">Login</button>
+            </form>
+            <div style="width: 80%; margin: auto">
+                or <a href="{% url 'register' %}" style="color: #fd7e14">Register</a>
+            </div>
+    
+        </div>
+    </div>
+</div>
+>>>>>>> Stashed changes
 {% endblock %}
+

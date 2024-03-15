@@ -2,62 +2,98 @@
 {% load static %}
 
 {% block content %}
-  <div class="about-section">
-    <h2>About Us</h2>
-    <p>
-      Welcome to our About page. Here you can find information about our project and our team. 
-      We are creating a website where students can leave feedback on univesity facilities
-    </p>
-    <!-- ... other content ... -->
-  </div>
+    <style>
+        .about-section h2, .team-section h2 {
+            color: #fd7e14;
+        }
+        .team-section{
+            margin-top: 48px;
+        }
 
-  <!-- Team Members Section -->
-  <div class="team-section">
-    <h2>Meet Our Team</h2>
-    <div class="team-members">
-      
-      <!-- Team Member -->
-      <div class="team-member">
-        <img src="{% static 'images/Joan.jpg' %}" alt="Picture of Joan" class="team-photo">
-        <div class="member-info">
-          <h3>Joan</h3>
-          <p>Hi my names Joan I am studying the Electronic and Software Engineering course.</p>
+        .team-members {
+            margin-top: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+        }
+        .team-member{
+            width: 40%;
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+        .team-member img{
+            width: 240px;
+            height: 320px;
+            object-fit: cover;
+        }
+        {% comment %} .about-background {
+          background-image: url('{% static "images/E0000_15.jpg" %}');
+          background-size: cover;
+          background-repeat: no-repeat;
+          padding-top: 10px;
+          positon: relative;
+      } {% endcomment %}
+    </style>
+    <div class="template-page-container " style="text-align: center">
+         <div class="about-section">
+            <h2>About Us</h2>
+            <p style="margin-top: 24px">
+              Welcome to our About page. Here you can find information about our project and our team.
+              We are creating a website where students can leave feedback on univesity facilities
+            </p>
+        <!-- ... other content ... -->
         </div>
-      </div>
 
-      <!-- Repeat for each team member -->
-      <div class="team-member">
-        <img src="{% static 'images/Arman.jpg' %}" alt="Picture of Arman" class="team-photo">
-        <div class="member-info">
-          <h3>Arman</h3>
-          <p>Hi my names Arman I am studying the Electronic and Software Engineering course.</p>
-        </div>
-      </div>
+      <!-- Team Members Section -->
+      <div class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="team-members">
 
-      <div class="team-member">
-        <img src="{% static 'images/Gabriel.jpg' %}" alt="Picture of Gabriel" class="team-photo">
-        <div class="member-info">
-          <h3>Gabriel</h3>
-          <p>Hi my names Gabriel I am studying the Computer Science course.</p>
-        </div>
-      </div>
+          <!-- Team Member -->
+          <div class="team-member">
+            <img src="{% static 'images/Joan.jpg' %}" alt="Picture of Joan" class="team-photo">
+            <div class="member-info">
+              <h3>Joan</h3>
+              <p>Hi my names Joan I am studying the Electronic and Software Engineering course.</p>
+            </div>
+          </div>
 
-      <div class="team-member">
-        <img src="{% static 'images/Yang.jpg' %}" alt="Picture of Yang" class="team-photo">
-        <div class="member-info">
-          <h3>Yang</h3>
-          <p>Hi my names Yang I am studying the Computer Science course.</p>
-        </div>
-      </div>
+          <!-- Repeat for each team member -->
+          <div class="team-member">
+            <img src="{% static 'images/Arman.jpg' %}" alt="Picture of Arman" class="team-photo">
+            <div class="member-info">
+              <h3>Arman</h3>
+              <p>Hi my names Arman I am studying the Electronic and Software Engineering course.</p>
+            </div>
+          </div>
 
-      <div class="team-member">
-        <img src="{% static 'images/Rhys.jpg' %}" alt="Picture of Rhys" class="team-photo">
-        <div class="member-info">
-          <h3>Rhys</h3>
-          <p>Hi my names Rhys I am studying the Computer Science course.</p>
-        </div>
-      </div>
+          <div class="team-member">
+            <img src="{% static 'images/Gabriel.jpg' %}" alt="Picture of Gabriel" class="team-photo">
+            <div class="member-info">
+              <h3>Gabriel</h3>
+              <p>Hi my names Gabriel I am studying the Computer Science course.</p>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img src="{% static 'images/Yang.jpg' %}" alt="Picture of Yang" class="team-photo">
+            <div class="member-info">
+              <h3>Yang</h3>
+              <p>Hi my names Yang I am studying the Computer Science course.</p>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img src="{% static 'images/Rhys.jpg' %}" alt="Picture of Rhys" class="team-photo">
+            <div class="member-info">
+              <h3>Rhys</h3>
+              <p>Hi my names Rhys I am studying the Computer Science course.</p>
+            </div>
+          </div>
 
     </div>
   </div>
+    </div>
 {% endblock %}

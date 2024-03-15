@@ -4,26 +4,52 @@
 {% block title %}{{ building.name }}{% endblock %}
 
 {% block content %}
-<h2>{{ building.name }}</h2>
+    <style>
+        .comment-container {
+            width: 100%;
+            padding: 12px;
+        }
+        .comment-profile-img{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
 
-<div>
-    <img src="{{ building.image.url }}" class="building-picture" alt="{{ building.name }}" style="max-width: 100%; height: auto;">
-    <p>Description: {{ building.description }}</p>
-    <p><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
-    <p><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
-    <p><a href="{{ building.website }}" target="_blank">Website</a></p>
-</div>
+    </style>
+    <div class="template-page-container">
+        <h2>{{ building.name }}</h2>
+        <div style="width: 100%;">
+            <div style="display: flex">
+                <img src="{{ building.image.url }}" class="building-picture" alt="{{ building.name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
+            </div>
+            <div style="padding: 12px; ">
+                <p>Description: {{ building.description }}</p>
+                <div style="display: flex; justify-content: space-between">
+                    <p><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
+                    <p><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
+                    <p><a href="{{ building.website }}" target="_blank">Website</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        {% for comment in building.comments.all %}
+        <div class="comment-container">
+            <!-- Assuming the User model has a one-to-one relationship with Profile named 'profile' -->
+            <div>
+                <img src="{{ comment.author.profile.picture.url }}" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
+                <span style="margin-left: 18px">{{ comment.author.username }}</span>
+            </div>
+            <p style="margin-top: 18px">{{ comment.text }}</p>
+        </div>
+        {% endfor %}
+        {%  if building.comments.all %}
+        <div class="divider"></div>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'new_level' %}" class="building-submit add-new-btn">Add a new Level</a>
+        {% endif %}
 
-{% for comment in building.comments.all %}
-<div>
-    <!-- Assuming the User model has a one-to-one relationship with Profile named 'profile' -->
-    <img src="{{ comment.author.profile.picture.url }}" alt="{{ comment.author.username }}'s profile picture">
-    <p>{{ comment.author.username }}: {{ comment.text }}</p>
-</div>
-{% endfor %}
-{% if user.is_authenticated %}
-    <a href="{% url 'new_level' %}" class="btn-small">Add a new Level</a>
-{% endif %}
+    </div>
 
 
 {% endblock %}

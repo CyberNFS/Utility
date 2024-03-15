@@ -4,6 +4,7 @@
 {% block title %}Home | Utility Website{% endblock %}
 
 {% block content %}
+<<<<<<< Updated upstream
 
 <header class="bg-primary-gradient mb-5">
     <div class="container pt-4 pt-xl-5">
@@ -117,6 +118,34 @@
 
 
 
+=======
+<style type="text/css">
+    .home-background {
+        /* Use the 'static' tag to include an image from static files */
+        background-image: url('{% static "images/E0000_15.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100vh;
+        positon: relative;
+    }
+    .title {
+        position: absolute;
+        margin: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw;
+        text-align: center;
+        color: white;
+        font-size: 3rem;
+    }
+</style>
+
+<div class="home-background">
+    <h1 class="title">Welcome to the Utility Website</h1>
+>>>>>>> Stashed changes
     <!-- Page-specific content here -->
 </div>
 {% endblock %}

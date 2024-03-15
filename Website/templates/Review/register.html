@@ -3,10 +3,65 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
+<<<<<<< Updated upstream
 <h2>Registration</h2>
 <form method="post" >
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Register</button>
 </form>
+=======
+<style>
+    .register-container {
+           width: 100%;
+           margin-top: 24px;
+           margin-bottom: 24px;
+           border-radius: 12px;
+           padding: 16px;
+           box-shadow: 0 2px 30px #5f6f7c;
+   }
+   .register-form {
+       width: 80%;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       margin: 48px auto;
+   }
+   .register-form-item{
+       width: 100%;
+       display: flex;
+       flex-direction: column;
+       margin-bottom: 16px;
+   }
+   .profile-background {
+    background-image: url('{% static "images/E0000_15.jpg" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 10px;
+    {% comment %} height: 100vh; {% endcomment %}
+    positon: relative;
+}
+   </style>
+   <div class="template-page-container">
+       <div class="register-container">
+           <h2>Registration</h2>
+           <form method="post" class="register-form">
+               {% csrf_token %}
+               {% for field in form %}
+                   <div class="register-form-item">
+                       <label>{{ field.label }}</label>
+                       {{ field }}
+                       <span class="error-msg" style="color: red">{{ field.errors.0 }}</span>
+                   </div>
+               {% endfor %}
+               <div class="divider"></div>
+               <button type="submit" class="submit-btn" style="width: 100%; border-radius: 8px">Register</button>
+           </form>
+            <div style="width: 80%; margin: auto">
+               or <a href="{% url 'login' %}" style="color: #fd7e14">Login</a>
+           </div>
+       </div>
+   </div>
+>>>>>>> Stashed changes
 {% endblock %}

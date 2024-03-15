@@ -3,6 +3,7 @@
 {% block title %}Facilities | Utility Website{% endblock %}
 
 {% block content %}
+<<<<<<< Updated upstream
 
 
 <section class="py-5">
@@ -60,36 +61,82 @@
         </div>
     </div>
 </section>
+=======
+<style>
+    .comment-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+    
+    .building-information-item{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .building-picture{
+        width: 80%;
+        height: 80%;
+        margin: auto;
+        text-align: center;
+    }
+    .building-name{
+        position: absolute;
+        right: 10%;
+        bottom: 0;
+        padding: 0.5rem 1rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        font-size: 18px;
+    }
+    .form_control{
+        width: 100%;
+        margin: 0 auto;
+    }
+    .comment-container p {
+        width: 100%;
+        text-align: center;
+    }
+    
+</style>
+
+{#<h2>Buildings Page</h2>#}
+>>>>>>> Stashed changes
 <!-- Content specific to the Buildings page -->
-    {% for building in buildings %}
-    <!-- Building Information -->
-    <div>
-        <a href="{% url 'building_profile' building.slug %}">
-            <img src="{{ building.image.url }}" class = building-picture alt="{{ building.name }}">
-            <p>{{ building.name }}</p>
-        </a>
-    </div>
-        <form method="post" action="{% url 'buildings' %}">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <input type="hidden" name="building_id" value="{{ building.id }}">
+    <div class="template-page-container">
+        {% for building in buildings %}
+        <div class="building-information-item">
+            <a href="{% url 'building_profile' building.slug %}" style="display: flex; position: relative; width: 100%; height: max-content">
+                <img src="{{ building.image.url }}" class = building-picture alt="{{ building.name }}">
+                <p class="building-name">{{ building.name }}</p>
+            </a>
+             <form method="post" action="{% url 'buildings' %}" style="margin-top: 12px; width: 80%;" class="comment-container">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <input type="hidden" name="building_id" value="{{ building.id }}">
 
-            <button type="submit">Submit Comment</button>
-        </form>
-    {% endfor %}
-
-    {% for comment in building.comments.all %}
-        <div>
-            <img src="{{ comment.author.profile.picture.url }}" alt="User profile picture">
-
-            <p>{{ comment.author.username }}: {{ comment.text }}</p>
+                <button type="submit" class="building-submit">Submit Comment</button>
+            </form>
+            <div class="divider"></div>
         </div>
-    {% endfor %}
+        {% endfor %}
+
+        {% for comment in building.comments.all %}
+            <div>
+                <img src="{{ comment.author.profile.picture.url }}" alt="User profile picture">
+                <div>{{ comment.author.username }}: {{ comment.text }}</div>
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'new_building' %}" class="building-submit add-new-btn">Add a new Facility</a>
+        {% endif %}
+    </div>
 
 
-
-    {% if user.is_authenticated %}
-        <a href="{% url 'new_building' %}" class="btn-small">Add a new Facility</a>
-    {% endif %}
 
 {% endblock %}
