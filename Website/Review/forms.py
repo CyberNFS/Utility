@@ -60,3 +60,10 @@ class BuildingForm(forms.ModelForm):
         model = Building
         fields = ['name', 'description', 'image',
                   'google_map', 'instagram', 'website']
+        
+class BuildingSearchForm(forms.Form):
+    q = forms.CharField(
+        required=False, 
+        label='Search Buildings', 
+        widget=forms.TextInput(attrs={'placeholder': 'Search...'})
+    )

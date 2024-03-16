@@ -135,6 +135,9 @@
                 <li class="nav-item">
                     <a class="nav-link {% if isactive == 'about' %}active{% endif %}" href="{% url 'about' %}">About Us</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if isactive == 'search' %}active{% endif %}" href="{% url 'building_search' %}">Search</a>
+                </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item" id="last-li">
                         <a class="nav-link" href="{% url 'profile' %}">Profile</a>

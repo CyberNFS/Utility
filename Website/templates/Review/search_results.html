@@ -1,0 +1,36 @@
+{% extends 'Review/base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+    <h1>Search Buildings</h1>
+    <form method="get" action="{% url 'building_search' %}">
+        {{ form.q.label_tag }}
+        {{ form.q }}
+        <input type="submit" value="Search">
+    </form>
+
+    {% if search_performed %}
+        {% if results %}
+            <ul>
+                {% for building in results %}
+                    <li>
+                        <h2>{{ building.name }}</h2>
+                        {% if building.image %}
+                            <img src="{{ building.image.url }}" alt="{{ building.name }}" style="width: 500px; height: 500px;">
+                        {% endif %}
+                        <p style="font-size: 24px;">{{ building.description }}</p>
+                        <p style="font-size: 24px;">The location on Google Maps is: {{ building.google_map }}</p>
+                        <p style="font-size: 24px;">The instagram for the building if it has one: {{building.instagram }}</p>
+                        <p style="font-size: 24px;">The buildings on the University of Glasgow website: {{ building.website }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+        <p style="font-size: 24px;">No results found for your search query.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+

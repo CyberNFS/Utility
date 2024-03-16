@@ -6,6 +6,9 @@ from django.contrib.auth import login as auth_login
 from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm
 from .models import Comment, Building, Profile
 from django.contrib.auth.forms import AuthenticationForm
+from .models import Building
+from .forms import BuildingSearchForm
+from django.db.models import Q
 
 
 def home(request):
@@ -178,3 +181,32 @@ def comment(request):
 
 def about(request):
     return render(request, 'Review/about.html')
+
+
+def building_search(request):
+    form = BuildingSearchForm(request.GET)
+    results = None
+    search_performed = False  # Flag to indicate if a search was performed
+
+    if 'q' in request.GET:
+        search_performed = True  # Update the flag when a search is performed
+        if form.is_valid():
+            query = form.cleaned_data['q']
+            if query:
+                results = Building.objects.filter(
+                    Q(name__icontains=query) |
+                    Q(description__icontains=query) |
+                    Q(google_map__icontains=query) |
+                    Q(instagram__icontains=query) |
+                    Q(website__icontains=query)
+                )
+            else:
+                results = Building.objects.all()
+
+    context = {
+        'form': form,
+        'results': results,
+        'search_performed': search_performed
+    }
+    return render(request, 'Review/search_results.html', context)
+

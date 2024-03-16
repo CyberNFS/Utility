@@ -42,6 +42,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('comment/', views.comment, name='comment'),
     path('about/', views.about, name='about'),
+    path('search/', views.building_search, name='building_search'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
