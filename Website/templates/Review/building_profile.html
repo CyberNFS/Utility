@@ -23,6 +23,48 @@
             background-color: grey;
         }
 
+        .accordion {
+            background-colour: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            margin-bottom: 10px;
+        }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel{
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+
+        .accordion:after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+          
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        .spacing {
+            margin-bottom: 50px;
+        }
+
     </style>
 
 
@@ -32,7 +74,7 @@
             <div style="width: 100%;">
 
                 <div style="display: flex">
-                    <img src="{{ MEDIA_URL }}{{ building.building_image }}" class="building-picture" alt="{{ building.building_name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
+                    <img  class="building-picture" src="{{ MEDIA_URL }}{{ building.building_image }}"  alt="{{ building.building_name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
                 </div>
 
                 <div style="padding: 12px; ">
@@ -47,21 +89,51 @@
                 </div>
             </div>
 
+            
+            <div class = "spacing">
+                {% if rooms %}
         
-            {% if rooms %}
-    
-                <h2>Rooms:</h2>
-                    <ul>
+                    <h2>Rooms:</h2>
                         {% for room in rooms %}
-                            <li>{{ room.room_title }}</li>
-                        {% endfor %}
-                    </ul>
-    
-            {% else %}
-                <p><strong>This building has no rooms or none have been added yet.</strong></p>
-    
-            {% endif %}
 
+                            <button class = "accordion">{{ room.room_title }}</button>
+
+                            <div class = "panel">
+                                <img src = "{{ MEDIA_URL }}{{ room.room_picture }}">
+                            </div>
+        
+                        {% endfor %}
+                                
+                {% else %}
+                    <p><strong>This building has no rooms or none have been added yet.</strong></p>
+        
+                {% endif %}
+
+
+                <script>
+
+                    var acc = document.getElementsByClassName("accordion");
+                    var i;
+            
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].addEventListener("click", function() {
+                        
+                            this.classList.toggle("active");
+            
+                            var panel = this.nextElementSibling;
+            
+                            if(panel.style.maxHeight){
+                                panel.style.maxHeight = null;
+            
+                            } else{
+                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            }
+                    });
+                }
+            
+                </script>
+
+            </div>
 
     
     

@@ -521,7 +521,7 @@ def populate():
         
         
         {"room_title": "Room 582",
-         "room_picture": "room_images/asbs-584.jpg"},
+         "room_picture": "room_images/asbs-582.jpg"},
         
         
         {"room_title": "Room 587",
@@ -1208,7 +1208,7 @@ def populate():
          "room_picture": "room_images/st-andrews-347.jpg"},
         
         
-        {"room_title": "Room 352 (Taching Lab)",
+        {"room_title": "Room 352 (Teaching Lab)",
          "room_picture": "room_images/st-andrews-352.jpg"},
         
         
