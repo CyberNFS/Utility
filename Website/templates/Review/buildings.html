@@ -49,21 +49,27 @@
 {#<h2>Buildings Page</h2>#}
 <!-- Content specific to the Buildings page -->
     <div class="template-page-container">
-        {% for building in buildings %}
-        <div class="building-information-item">
-            <a href="{% url 'building_profile' building.slug %}" style="display: flex; position: relative; width: 100%; height: max-content">
-                <img src="{{ building.image.url }}" class = building-picture alt="{{ building.name }}">
-                <p class="building-name">{{ building.name }}</p>
-            </a>
-             <form method="post" action="{% url 'buildings' %}" style="margin-top: 12px; width: 80%;" class="comment-container">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                <input type="hidden" name="building_id" value="{{ building.id }}">
 
-                <button type="submit" class="building-submit">Submit Comment</button>
-            </form>
-            <div class="divider"></div>
-        </div>
+        {% for building in buildings %}
+
+            <div class="building-information-item">
+
+                <a href="/Review/building_profile/{{ building.building_slug }}/" style="display: flex; position: relative; width: 100%; height: max-content">
+                    <img src="{{ MEDIA_URL }}{{ building.building_image }}" class = building-picture alt="{{ building.building_name }}">
+                    <p class="building-name">{{ building.building_name }}</p>
+                </a>
+
+                <form method="post" action="{% url 'buildings' %}" style="margin-top: 12px; width: 80%;" class="comment-container">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <input type="hidden" name="building_id" value="{{ building.id }}">
+
+                    <button type="submit" class="building-submit">Submit Comment</button>
+                </form>
+
+                <div class="divider"></div>
+            </div>
+
         {% endfor %}
 
         {% for comment in building.comments.all %}
@@ -76,7 +82,6 @@
             <a href="{% url 'new_building' %}" class="building-submit add-new-btn">Add a new Facility</a>
         {% endif %}
     </div>
-
 
 
 {% endblock %}

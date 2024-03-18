@@ -1,53 +1,119 @@
 {% extends 'Review/base.html' %}
 {% load static %}
 
-{% block title %}{{ building.name }}{% endblock %}
+{% block title %} {{build.building_name}} {% endblock %}
 
 {% block content %}
+
     <style>
         .comment-container {
             width: 100%;
             padding: 12px;
         }
+
         .comment-profile-img{
             width: 32px;
             height: 32px;
             border-radius: 50%;
-        }        
+        }
+        
+        #map {
+            width: 80%;
+            height: 400px;
+            background-color: grey;
+        }
 
     </style>
+
+
     <div class="template-page-container">
-        <h2>{{ building.name }}</h2>
-        <div style="width: 100%;">
-            <div style="display: flex">
-                <img src="{{ building.image.url }}" class="building-picture" alt="{{ building.name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
-            </div>
-            <div style="padding: 12px; ">
-                <p>Description: {{ building.description }}</p>
-                <div style="display: flex; justify-content: space-between">
-                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.google_map }}" target="_blank">Google Map</a></p>
-                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.instagram }}" target="_blank">Instagram</a></p>
-                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.website }}" target="_blank">Website</a></p>
+
+        <h2>{{ building.building_name }}</h2>
+            <div style="width: 100%;">
+
+                <div style="display: flex">
+                    <img src="{{ MEDIA_URL }}{{ building.building_image }}" class="building-picture" alt="{{ building.building_name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
+                </div>
+
+                <div style="padding: 12px; ">
+                    <p>Description: {{ building.building_description }}</p>
+
+                    <div style="display: flex; justify-content: space-between">
+                        <!---<p class = "btn btn-light mr-2 mt-3"><a href="{{ building.google_map }}" target="_blank">Google Map</a></p> -->
+                        <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_instagram }}" target="_blank">Instagram</a></p>
+                        <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_website }}" target="_blank">Website</a></p>
+                    </div>
+
                 </div>
             </div>
+
+        
+            {% if rooms %}
+    
+                <h2>Rooms:</h2>
+                    <ul>
+                        {% for room in rooms %}
+                            <li>{{ room.room_title }}</li>
+                        {% endfor %}
+                    </ul>
+    
+            {% else %}
+                <p><strong>This building has no rooms or none have been added yet.</strong></p>
+    
+            {% endif %}
+
+
+    
+    
+    
+            <div id = "map">
+        
+                <script> 
+                    function initMap() {
+                        let location = {lat: {{ latitude }}, lng: {{ longtitude }}};
+                        let map = new google.maps.Map(
+                            document.getElementById('map'), {zoom: 17, center: location}
+                            );
+        
+                        let marker = new google.maps.Marker({position: location, map: map})
+                    }
+                </script>
+        
+                {% if building.google_map %}
+        
+                <script async defer src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyClzpypLber90-EPZWdCFd2_Z9AjhhGSdU&callback=initMap"></script>
+        
+                
+                {% endif %}
+
         </div>
-        <div class="divider"></div>
-        {% for comment in building.comments.all %}
-        <div class="comment-container">
-            <!-- Assuming the User model has a one-to-one relationship with Profile named 'profile' -->
-            <div>
-                <img src="{{ comment.author.profile.picture.url }}" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
-                <span style="margin-left: 18px">{{ comment.author.username }}</span>
-            </div>
-            <p style="margin-top: 18px">{{ comment.text }}</p>
+
+
+        <div class="divider">
+
+            {% for comment in building.comments.all %}
+
+                <div class="comment-container">
+                    <!-- Assuming the User model has a one-to-one relationship with Profile named 'profile' -->
+                    <div>
+                        <img src="{{ comment.author.profile.picture.url }}" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
+                        <span style="margin-left: 18px">{{ comment.author.username }}</span>
+                    </div>
+                    <p style="margin-top: 18px">{{ comment.text }}</p>
+                </div>
+
+            {% endfor %}
+
+
+            {%  if building.comments.all %}
+                <div class="divider"></div>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'new_level' %}" class="building-submit add-new-btn">Add a new Level</a>
+            {% endif %}
+
         </div>
-        {% endfor %}
-        {%  if building.comments.all %}
-        <div class="divider"></div>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <a href="{% url 'new_level' %}" class="building-submit add-new-btn">Add a new Level</a>
-        {% endif %}
 
     </div>
 

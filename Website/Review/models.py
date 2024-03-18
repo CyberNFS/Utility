@@ -9,25 +9,53 @@ from django.dispatch import receiver
 
 
 class Building(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(default='')
-    image = models.ImageField(
-        upload_to="building_images", blank=True, null=True)
+    
+    building_name = models.CharField(max_length=255, unique = True, default = '')
+    building_description = models.TextField(default='')
+    
+    building_image = models.ImageField(upload_to="building_images", blank=True, default = "{{ MEDIA_URL }}building_images/default-image.jpg")
     google_map = models.CharField(max_length=255, default='')
-    instagram = models.CharField(max_length=255, default='')
-    website = models.CharField(max_length=255, default='')
-    # Allowing null for image field
+    
+    building_instagram = models.URLField(blank = True, default = "https://www.instagram.com/uofglasgow?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==")
+    building_website = models.URLField(blank = True)
+    
+    building_views = models.IntegerField(default = 0)
+    building_likes = models.IntegerField(default = 0)
+    
 
     date_added = models.DateTimeField(default=timezone.now)
-    slug = models.SlugField(unique=True, blank=True, default='')
-
+    building_slug = models.SlugField(unique = True, default = "")
+    
+    
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
+        
+        self.building_slug = slugify(self.building_name)
+        super(Building, self).save(*args, **kwargs)
+    
+    
+    class Meta:
+        verbose_name_plural = "Buildings"
 
     def __str__(self):
-        return f"{self.name} - {self.description}"
+        return self.building_name
+    
+    
+    
+class BuildingRooms(models.Model):
+    
+    building = models.ForeignKey(Building, on_delete = models.CASCADE)
+    room_title = models.CharField(max_length = 225)
+    room_picture = models.ImageField(upload_to = "room_images", blank = True, default = "")
+    
+    room_views = models.IntegerField(default = 0)
+    room_likes = models.IntegerField(default = 0)
+    
+    
+    class Meta:
+        verbose_name_plural = "Building Rooms"
+    
+    def __str__(self):
+        return self.room_title
 
 
 class Comment(models.Model):
@@ -43,7 +71,7 @@ class Comment(models.Model):
 
     def __str__(self):
         if self.building is not None:
-            return f'Comment by {self.author.username} on {self.building.name}'
+            return f'Comment by {self.author.username} on {self.building.building_name}'
         else:
             return f'Comment by {self.author.username} without a building'
 

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
 from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm
-from .models import Comment, Building, Profile
+from .models import Comment, Building, Profile, BuildingRooms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Building
 from .forms import BuildingSearchForm
@@ -34,8 +34,10 @@ def buildings(request):
                     pass
     else:
         comment_form = CommentForm()
+        
     buildings = Building.objects.all()
     context = {'comment_form': comment_form, 'buildings': buildings}
+    
     return render(request, 'Review/buildings.html', context)
 
 
@@ -194,11 +196,11 @@ def building_search(request):
             query = form.cleaned_data['q']
             if query:
                 results = Building.objects.filter(
-                    Q(name__icontains=query) |
-                    Q(description__icontains=query) |
+                    Q(building_name__icontains=query) |
+                    Q(building_description__icontains=query) |
                     Q(google_map__icontains=query) |
-                    Q(instagram__icontains=query) |
-                    Q(website__icontains=query)
+                    Q(building_instagram__icontains=query) |
+                    Q(building_website__icontains=query)
                 )
             else:
                 results = Building.objects.all()
@@ -209,4 +211,31 @@ def building_search(request):
         'search_performed': search_performed
     }
     return render(request, 'Review/search_results.html', context)
+
+
+
+def show_building(request, building_name_slug):
+    
+    context_dict = {}
+    
+    try:
+        
+        building = Building.objects.get(building_slug = building_name_slug)
+        
+        rooms = BuildingRooms.objects.filter(building = building)
+        
+        context_dict["rooms"] = rooms
+        context_dict["building"] = building
+        
+        latitude, longtitude = building.google_map.split(',')
+        context_dict["latitude"] = latitude
+        context_dict["longtitude"] = longtitude
+        
+    except Building.DoesNotExist:
+        
+        context_dict["building"] = None
+        context_dict["rooms"] = None
+        
+    
+    return render(request, 'Review/building_profile.html', context = context_dict)
 

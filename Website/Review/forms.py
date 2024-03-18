@@ -56,10 +56,26 @@ class RegistrationForm(UserCreationForm):
 
 
 class BuildingForm(forms.ModelForm):
+    
+    building_name = forms.CharField(max_length = 128, help_text = "Please enter the building's name.")
+    building_slug = forms.CharField(widget = forms.HiddenInput(), required = False)
+    
+    building_image = forms.ImageField()
+    google_map = forms.CharField(max_length = 255, help_text = "Please insert the coordinates from a google map of the building.")
+    
+    building_website = forms.URLField(help_text = "Please enter the complete URL of the page.")
+    building_instagram = forms.URLField(help_text = "Please enter the complete url of the instagram page")
+    
+    building_views = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
+    building_likes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
+    
+    building_description = forms.CharField(max_length = 225)
+    
     class Meta:
+        
         model = Building
-        fields = ['name', 'description', 'image',
-                  'google_map', 'instagram', 'website']
+        fields = ('building_name', )
+        
         
 class BuildingSearchForm(forms.Form):
     q = forms.CharField(
