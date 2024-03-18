@@ -1,9 +1,6 @@
 {% extends 'Review/base.html' %}
 {% load static %}
 
-
-
-
 {% block content %}
     <h1>Search Buildings</h1>
     <form method="get" action="{% url 'building_search' %}">
@@ -17,20 +14,38 @@
             <ul>
                 {% for building in results %}
                     <li>
-                        <h2>{{ building.name }}</h2>
-                        {% if building.image %}
-                            <img src="{{ building.image.url }}" alt="{{ building.name }}" style="width: 500px; height: 500px;">
+                        <h2>{{ building.building_name }}</h2>
+                        {% if building.building_image %}
+                            <img src="{{ building.building_image.url }}" alt="{{ building.building_name }}" style="width: 500px; height: auto;">
+                        {% else %}
+                            <img src="{% static 'building_images/default-image.jpg' %}" alt="Default Building Image" style="width: 500px; height: auto;">
                         {% endif %}
-                        <p style="font-size: 24px;">{{ building.description }}</p>
-                        <p style="font-size: 24px;">The location on Google Maps is: {{ building.google_map }}</p>
-                        <p style="font-size: 24px;">The instagram for the building if it has one: {{building.instagram }}</p>
-                        <p style="font-size: 24px;">The buildings on the University of Glasgow website: {{ building.website }}</p>
+                        <p>{{ building.building_description }}</p>
+                        <p>The location on Google Maps is: {{ building.google_map }}</p>
+                        {% if building.building_instagram %}
+                            <p>The Instagram for the building: <a href="{{ building.building_instagram }}" style="color: blue; text-decoration: underline;">Instagram</a></p>
+                        {% endif %}
+                        {% if building.building_website %}
+                            <p>Visit the building on the University of Glasgow website: <a href="{{ building.building_website }}" style="color: blue; text-decoration: underline;">Website</a></p>
+                        {% endif %}
+
+                        <!-- Comments Section -->
+                        <div class="comments-section">
+                            <h3>Comments:</h3>
+                            {% for comment in building.comments.all %}
+                                <div class="comment">
+                                    <strong>{{ comment.author.username }}</strong> on <em>{{ comment.date_commented }}</em>
+                                    <p>{{ comment.text }}</p>
+                                </div>
+                            {% empty %}
+                                <p>No comments yet.</p>
+                            {% endfor %}
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-        <p style="font-size: 24px;">No results found for your search query.</p>
+            <p>No results found for your search query.</p>
         {% endif %}
     {% endif %}
 {% endblock %}
-
