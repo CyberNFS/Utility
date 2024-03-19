@@ -27,6 +27,7 @@ class Building(models.Model):
     building_slug = models.SlugField(unique = True, default = "")
     
     
+    
     def save(self, *args, **kwargs):
         
         self.building_slug = slugify(self.building_name)

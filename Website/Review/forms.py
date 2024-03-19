@@ -74,7 +74,7 @@ class BuildingForm(forms.ModelForm):
     class Meta:
         
         model = Building
-        fields = ('building_name', )
+        fields = ('building_name','building_image' )
         
         
 class BuildingSearchForm(forms.Form):

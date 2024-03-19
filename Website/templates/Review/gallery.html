@@ -3,6 +3,35 @@
 {% block title %}Gallery | Utility Website{% endblock %}
 
 {% block content %}
+<style>
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px; /* Adjust the gap between images as needed */
+        padding: 20px; /* Adjust the padding as needed */
+    }
+    .gallery-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .gallery-image {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+    }
+</style>
+
 <h2>Gallery</h2>
-<!-- Content specific to the page -->
+<div class="gallery-container">
+    {% for building in buildings %}
+        {% if building.building_image %}
+            <div class="gallery-item">
+                <img src="{{ building.building_image.url }}" alt="{{ building.building_name }}" class="gallery-image">
+                <p>{{ building.building_name }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

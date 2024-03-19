@@ -100,8 +100,10 @@ def new_building(request):
         form = BuildingForm(request.POST, request.FILES)
         if form.is_valid():
             building = form.save(commit=False)
-            # You can add additional processing here if needed
+            # Additional processing can be done here
             building.save()
+            # Assuming the Building model has an image field called 'building_image'
+            # Now the image is saved with the building instance
             return redirect('buildings')
     else:
         form = BuildingForm()
@@ -238,4 +240,8 @@ def show_building(request, building_name_slug):
         
     
     return render(request, 'Review/building_profile.html', context = context_dict)
+
+def gallery(request):
+    buildings = Building.objects.all()
+    return render(request, 'Review/gallery.html', {'buildings': buildings})
 
