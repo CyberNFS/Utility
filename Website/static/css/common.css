@@ -1,0 +1,19 @@
+:root{
+    --primary:#003c88;
+    --headerBg : linear-gradient(rgba(0,0,0, 0.7),rgba(0,0,0,0));
+    --secondMunuColor:rgba(18,102,168,0.8);
+    --listColor: rgba(242, 242, 242, 0.6);
+    --activeListColor:rgba(206, 233, 235, 0.4);
+    --btnIndexBackColor:#c5d689;
+    --btnLoginColor: #1266a8;
+    --btnLoginBorderColo:#E7C996;
+    --btnLoginActiveColor:#81b2f7;
+    --borderColor:#c9c9c9;
+    --fontActiveColor:#E7C996;
+    --fontBackColor: #FFF;
+    --fontColor:#969696;
+    --fontColor2: #1266a8;
+    --fontColor3:#023b6b;
+    --fontDetailInfoColor:#646464;
+    --transitionSet: all 0.3s ease-out 0s;
+}

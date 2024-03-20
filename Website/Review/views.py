@@ -12,7 +12,7 @@ from django.db.models import Q
 
 
 def home(request):
-    context = {}
+    context = {"isactive": "home"}
     return render(request, 'Review/home.html', context)
 
 
@@ -35,8 +35,18 @@ def buildings(request):
     else:
         comment_form = CommentForm()
         
-    buildings = Building.objects.all()
-    context = {'comment_form': comment_form, 'buildings': buildings}
+    keywords = request.GET.get('keyword')
+    if keywords:
+        buildings = Building.objects.filter(
+            Q(building_name__icontains=keywords) |
+            Q(building_description__icontains=keywords) |
+            Q(google_map__icontains=keywords) |
+            Q(building_instagram__icontains=keywords) |
+            Q(building_website__icontains=keywords)
+        )
+    else:
+        buildings = Building.objects.all()
+    context = {'comment_form': comment_form, 'buildings': buildings, "isactive": "buildings"}
     
     return render(request, 'Review/buildings.html', context)
 
@@ -82,7 +92,7 @@ def register(request):
 
 
 def gallery(request):
-    context = {}
+    context = {"isactive": "gallery"}
     return render(request, 'Review/gallery.html', context)
 
 
@@ -100,10 +110,11 @@ def new_building(request):
         form = BuildingForm(request.POST, request.FILES)
         if form.is_valid():
             building = form.save(commit=False)
-            # Additional processing can be done here
+            building.google_map = request.POST.get('google_map')
+            building.building_image = request.FILES.get('building_image')
+            building.building_description = request.POST.get('building_description')
+            # You can add additional processing here if needed
             building.save()
-            # Assuming the Building model has an image field called 'building_image'
-            # Now the image is saved with the building instance
             return redirect('buildings')
     else:
         form = BuildingForm()
@@ -229,9 +240,13 @@ def show_building(request, building_name_slug):
         context_dict["rooms"] = rooms
         context_dict["building"] = building
         
-        latitude, longtitude = building.google_map.split(',')
+        # if ',' in building.google_map:
+        #     latitude, longitude = building.google_map.split(',')
+        # else:
+        #     latitude, longitude = 'default_latitude', 'default_longitude'
+        latitude, longitude = building.google_map.split(',')
         context_dict["latitude"] = latitude
-        context_dict["longtitude"] = longtitude
+        context_dict["longtitude"] = longitude
         
     except Building.DoesNotExist:
         
