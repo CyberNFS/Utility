@@ -85,7 +85,7 @@ class Profile(models.Model):
     user = models.OneToOneField( #I think this line of code already indicates the foreign key and will do the auto-matching, so no need for user_id
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile', null=True)
     picture = models.ImageField(
-        upload_to="profile_images", blank=True, default=f'Website/mediacat.jpg')
+        upload_to="profile_images", blank=True, default = "profile_images/placeholder.jpg")
     upvotes = models.IntegerField(default=0)
     images = models.ImageField(upload_to="", blank=True)
     bio = models.CharField(max_length=100)

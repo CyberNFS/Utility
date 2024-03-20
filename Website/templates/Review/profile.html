@@ -41,10 +41,10 @@
         <div class="profile-container profile-background ">
             <div class="profile-info">
 
-            <img src="{{ user.profile.picture.url }}" alt="Profile Picture" class="profile-picture"/>
+            <img src="{{ MEDIA_URL }}{{ profile.picture }}" alt="Profile Picture" class="profile-picture"/>
             <div style="padding: 12px; flex: 1">
-                <h3 style="height: 64px; line-height: 64px">{{ user.profile.name }}</h3>
-                <div style="color: grey; word-break: break-all">{{ user.profile.bio }}</div>
+                <h3 style="height: 64px; line-height: 64px">{{ profile.name }}</h3>
+                <div style="color: grey; word-break: break-all">{{ profile.bio }}</div>
             </div>
         </div>
         <div class="divider"></div>

@@ -3,10 +3,55 @@
 {% block title %}Add New Level{% endblock %}
 
 {% block content %}
-<h2>Add a new Level</h2>
-<!-- Content specific to the  page -->
 
-    Please review the already existing <a href="{% url 'building_profile' %}" class="btn-small">Buildings</a> before creating a new room or adding a new level to it.
+    <style>
 
+        .new-room-form{
+            width: 100%;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 30px #5f6f7c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .new-room-form-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .new-room-form-container p {
+            width: 100%;
+        }
+        .new-room-form-container p label{
+            width: 100%;
+        }
+        .new-room-form-container p input, .new-building-form-container p textarea{
+            width: 100%;
+        }
 
+    </style>
+
+    <div class = "template-page-container">
+
+        <h2>Add a new Level</h2>
+            <div class = "notice">
+                Please review the already existing <a href="{% url 'building_profile' %}" class="btn-small">Buildings</a> before creating a new room or adding a new level to it.
+            </div>
+
+        <div class = "new-room-form">
+            <form method = "post" enctype = "multipart/form-data" style = "width: 100%" class = "new-room-form-container">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="room-submit" style="width: max-content; margin: auto">Add Room/Level</button>
+            </form>
+
+        </div>
+
+    </div>
+    
 {% endblock %}

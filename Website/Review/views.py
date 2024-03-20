@@ -1,15 +1,19 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
-from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm
+from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm, RoomForm
 from .models import Comment, Building, Profile, BuildingRooms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Building
 from .forms import BuildingSearchForm
 from django.db.models import Q
-
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.urls import reverse
+from django.conf import settings
 
 def home(request):
     context = {"isactive": "home"}
@@ -84,7 +88,7 @@ def register(request):
             # Log the user in and redirect them
             login(request, new_user)
             # Redirect to a new page after registration
-            return redirect('profile')
+            return redirect('Review:profile')
     else:
         form = RegistrationForm()
 
@@ -113,6 +117,7 @@ def new_building(request):
             building.google_map = request.POST.get('google_map')
             building.building_image = request.FILES.get('building_image')
             building.building_description = request.POST.get('building_description')
+            building.building_website = request.POST.get("building_website")
             # You can add additional processing here if needed
             building.save()
             return redirect('buildings')
@@ -123,23 +128,47 @@ def new_building(request):
 
 # @login_required
 def new_level(request):
-    context = {}
-    return render(request, 'Review/new_level.html', context)
+    
+    if request.method == "POST":
+        form = RoomForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            room = form.save(commit = False)
+            room.room_title = request.POST.get("room_title")
+            room.picture = request.FILES.get("room_picture")
+            room.save()
+            
+            return redirect("buildings")
+    
+    else:
+        form = RoomForm()
+        
+    return render(request, "Review/new_level.html", {"form": form})
+    
 
-
-# @login_required
-def new_room(request):
-    context = {}
-    return render(request, 'Review/new_room.html', context)
 
 
 def profile(request):
     # Fetch the comments made by the user and their related profiles
+    
+    context_dict = {}
 
     user_comments = Comment.objects.select_related(
         'author__profile').filter(author=request.user)
-    context = {"comments": user_comments}
-    return render(request, 'Review/profile.html', context)
+    
+    try:
+        profile = request.user.profile
+        
+    except Profile.DoesNotExist:
+        profile = Profile(user = request.user)
+        
+    finally:
+        context_dict["profile"] = profile
+    
+    context_dict["comments"] = user_comments
+    
+        
+    return render(request, 'Review/profile.html', context_dict)
 
     # This view now requires the user to be logged in
     # if request.user.is_authenticated:
@@ -237,13 +266,14 @@ def show_building(request, building_name_slug):
         
         rooms = BuildingRooms.objects.filter(building = building)
         
+        comments = building.comments.all()
+        
+        
+        context_dict["comments"] = comments
         context_dict["rooms"] = rooms
         context_dict["building"] = building
         
-        # if ',' in building.google_map:
-        #     latitude, longitude = building.google_map.split(',')
-        # else:
-        #     latitude, longitude = 'default_latitude', 'default_longitude'
+        
         latitude, longitude = building.google_map.split(',')
         context_dict["latitude"] = latitude
         context_dict["longtitude"] = longitude

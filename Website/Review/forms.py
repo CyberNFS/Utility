@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Building, Profile
+from .models import Comment, Building, Profile, BuildingRooms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['name', 'picture', 'bio', 'reviews']
+        fields = ('name', 'picture', 'bio', 'reviews')
         # labels = {
         #     'name': 'Full Name',
         #     'picture': 'Profile Picture',
@@ -74,7 +74,7 @@ class BuildingForm(forms.ModelForm):
     class Meta:
         
         model = Building
-        fields = ('building_name','building_image' )
+        fields = ('building_name', )
         
         
 class BuildingSearchForm(forms.Form):
@@ -83,3 +83,18 @@ class BuildingSearchForm(forms.Form):
         label='Search Buildings', 
         widget=forms.TextInput(attrs={'placeholder': 'Search...'})
     )
+    
+    
+    
+class RoomForm(forms.ModelForm):
+    
+    room_title = forms.CharField(max_length = 128, help_text = "Please enter the title of the room")
+    room_picture = forms.ImageField()
+    
+    room_views = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
+    room_likes = forms.IntegerField(widget = forms.HiddenInput(), initial = 0)
+    
+    class Meta:
+        
+        model = BuildingRooms
+        exclude = ('category', )

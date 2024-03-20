@@ -1,0 +1,112 @@
+{% extends 'Review/base.html' %}
+{% load staticfiles %}
+
+
+{% block title_block %}
+    User Profiles
+{% endblock %}
+
+
+{% block content %}
+
+    <style>
+
+        .img-thumbnail{
+            padding:.25rem;
+            background-color:#fff;
+            border:1px solid #dee2e6;
+            border-radius:.25rem;
+            width:80px;
+            height:80px;
+        }
+
+        .container{
+            width:100%;
+            padding-right:15px;
+            padding-left:15px;
+            margin-right:auto;
+            margin-left:auto
+        }
+
+
+        .row{
+            display:-ms-flexbox;
+            display:flex;
+            -ms-flex-wrap:wrap;
+            flex-wrap:wrap;
+            margin-right:-15px;
+            margin-left:-15px
+        }
+
+    </style>
+
+
+    <div>
+        <div class="container">
+            <h1>User Profiles</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+
+            {% if userprofile_list %}
+
+                {% for list_user in userprofile_list %}
+
+                    <div class="spacing">
+                        <button class="accordion">{{ list_user.user.username }}</button>
+
+                            <div class = panel>
+
+                                {% if list_user.picture %}
+                                        
+                                    <img class = "img-thumbnail" src = "{{ MEDIA_URL }}{{ list_user.picture }}">
+
+                                {% else %}
+                                    <img class = "img-thumbnail" src = "{{ MEDIA_URL }}default-profile-image.jpg">
+
+                                {% endif %}
+
+                                <a href="{% url 'Review:profile' list_user.user.username %}">
+                                    {{ list_user.user.username }}
+                                </a>
+                            </div>
+                                
+                    </div>
+
+                {% endfor %}
+
+
+            {% else %}
+                <p>There are no users present on the website.</p>
+
+            {% endif %}
+
+            <script>
+
+                var acc = document.getElementsByClassName("accordion");
+                var i;
+        
+                for (i = 0; i < acc.length; i++) {
+                    acc[i].addEventListener("click", function() {
+                    
+                        this.classList.toggle("active");
+        
+                        var panel = this.nextElementSibling;
+        
+                        if(panel.style.maxHeight){
+                            panel.style.maxHeight = null;
+        
+                        } else{
+                            panel.style.maxHeight = panel.scrollHeight + "px";
+                        }
+                });
+            }
+        
+            </script>
+
+        </div>
+    </div>
+
+{% endblock %}
