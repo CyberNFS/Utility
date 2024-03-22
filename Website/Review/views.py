@@ -1,4 +1,5 @@
 import os
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -274,9 +275,9 @@ def show_building(request, building_name_slug):
         context_dict["building"] = building
         
         
-        latitude, longitude = building.google_map.split(',')
-        context_dict["latitude"] = latitude
-        context_dict["longtitude"] = longitude
+        latitude, longitude = building.google_map.strip().split(',')
+        context_dict["latitude"] = float(latitude)
+        context_dict["longitude"] = float(longitude.strip())
         
     except Building.DoesNotExist:
         
@@ -289,4 +290,50 @@ def show_building(request, building_name_slug):
 def gallery(request):
     buildings = Building.objects.all()
     return render(request, 'Review/gallery.html', {'buildings': buildings})
+
+
+
+class LikeBuildingView(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        
+        building_name = request.GET['building_name']
+        
+        try:
+            building = Building.objects.get(building_name = building_name)
+            
+        except Building.DoesNotExist:
+            return HttpResponse(-1)
+        
+        except ValueError:
+            return HttpResponse(-1)
+        
+        building.building_likes += 1
+        building.save()
+        
+        return HttpResponse(building.building_likes)
+    
+    
+    
+class DislikeBuildingView(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        
+        building_name = request.GET['building_name']
+        
+        try:
+            building = Building.objects.get(building_name = building_name)
+            
+        except Building.DoesNotExist:
+            return HttpResponse(-1)
+        
+        except ValueError:
+            return HttpResponse(-1)
+        
+        building.building_dislikes += 1
+        building.save()
+        
+        return HttpResponse(building.building_dislikes)
 

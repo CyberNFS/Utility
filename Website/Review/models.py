@@ -21,7 +21,7 @@ class Building(models.Model):
     
     building_views = models.IntegerField(default = 0)
     building_likes = models.IntegerField(default = 0)
-    
+    building_dislikes = models.IntegerField(default = 0)
 
     date_added = models.DateTimeField(default=timezone.now)
     building_slug = models.SlugField(unique = True, default = "")

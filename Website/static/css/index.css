@@ -56,6 +56,22 @@ a{
     background-color: lightgrey;
     margin: 2rem 0 ;
 }
+
+.building-picture {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid;
+    border-radius: 1%;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+
 .building-submit{
     height: 48px;
     border-radius: 18px;
@@ -220,11 +236,6 @@ a{
 }
 
 
-.comment-container {
-    width: 100%;
-    padding: 12px;
-}
-
 .comment-profile-img{
     width: 32px;
     height: 32px;
@@ -255,4 +266,53 @@ a{
     border: 1px solid #fd7e14;
     color: #fff;
     background: #fd7e14;
+}
+
+
+.display-content {
+
+    display: flex;
+    justify-content: center;
+}
+
+.button-padding {
+
+    padding-right: 20px;
+}
+
+
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.building-information-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.building-name{
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 18px;
+    max-width: 80%;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.form_control{
+    width: 100%;
+    margin: 0 auto;
 }

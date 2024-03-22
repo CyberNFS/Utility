@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 
 
 <html lang="en">
@@ -11,6 +11,16 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+
+
+    <script src="{% static "js/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+    <script src = "{% static "js/review-jquery.js" %}" crossorigin = "anonymous"></script>
+    <script src = "{% static "js/review-ajax.js" %}" crossorigin = "anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src = "{% static "js/utils.js" %}" crossorigin = "anonymous"></script>
+    
+    
+    
 </head>
 <body>
     <header>
@@ -60,31 +70,8 @@
         <!-- Content overridden in child templates -->
         {% endblock %}
     </main>
-    {% comment %} <footer>
-        <div class="footer">
-            <a class="nav-link" href="{% url 'about' %}" style="text-align: center; color: #000;">About Us</a>
-        </div>
-    </footer> {% endcomment %}
-    <script>
-        const currentPage ="{{ isactive }}";
-        const navbar = document.querySelector('.navbar');
-        const navLinks = document.querySelectorAll('.nav-link');
-        function handleScroll() {
-              const top = document.documentElement.scrollTop;
-              if(top > 20){
-                  navbar.classList.add('scroll-Nav')
-                  navLinks.forEach(link => {
-                      link.classList.add('scroll-Nav-Link')
-                  })
-              }else{
-                  navbar.classList.remove('scroll-Nav')
-                  navLinks.forEach(link => {
-                      link.classList.remove('scroll-Nav-Link')
-                  })
-              }
-        }
-        window.addEventListener('scroll', handleScroll);
-    </script>
+    
+
 </body>
 <footer>
     <div class="footer">

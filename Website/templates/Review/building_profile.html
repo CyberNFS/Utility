@@ -1,7 +1,7 @@
 {% extends 'Review/base.html' %}
 {% load static %}
 
-{% block title %} {{build.building_name}} {% endblock %}
+{% block title %} {{building.building_name}} {% endblock %}
 
 {% block content %}
 
@@ -9,31 +9,73 @@
     <div class="template-page-container">
 
         <h2>{{ building.building_name }}</h2>
-            <div style="width: 100%;">
+            <div>
 
-                <div style="display: flex">
-                    <img  class="building-picture" src="{{ MEDIA_URL }}{{ building.building_image }}"  alt="{{ building.building_name }}" style="max-width: 100%; height: auto; margin: 0 auto; text-align: center">
+                <div>
+                    <img class = "building-picture" src="{{ MEDIA_URL }}{{ building.building_image }}"  alt="{{ building.building_name }}">
                 </div>
 
                 <div style="padding: 12px; ">
                     <p>Description: {{ building.building_description }}</p>
 
-                    <div style="display: flex; justify-content: space-between">
+                    <div class="divider"></div>
 
-                        <!---<p class = "btn btn-light mr-2 mt-3"><a href="{{ building.google_map }}" target="_blank">Google Map</a></p> -->
-                        {% if building.building_instagram %}
-                            <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_instagram }}" target="_blank">Instagram</a></p>
+                    <div class = "display-content">
+
+                        {% if user.is_authenticated %}
+
+                            <div class = "button-padding">
+
+                                <strong id = "like_count">{{ building.building_likes }}</strong> <strong>likes</strong>
+
+                                    <button id = "like_btn"
+                                            data-buildingid = "{{ building.building_name }}"
+                                            class = "btn btn-primary btn-sm"
+                                            type = "button">
+
+                                        <span data-feather = "thumbs-up"></span>
+                                        Like Building
+
+                                    </button>
+                            </div>
+
+                            <div class = "button-padding">
+
+                                <strong id = "dislike_count">{{ building.building_dislikes }}</strong> <strong>dislikes</strong>
+
+                                <button id = "dislike_btn"
+                                        data-buildingid = "{{ building.building_name }}"
+                                        class = "btn btn-primary btn-sm"
+                                        type = "button">
+
+                                    <span data-feather = "thumbs-down"></span>
+                                    Dislike Building
+
+                                </button>
+
+                            </div>
+
+                            <div>
+
+                                {% if building.building_instagram %}
+                                    <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_instagram }}" target="_blank">Instagram</a></p>
                         
-                        {% else %}
-                            <p class = "btn btn-light mr-2 mt-3">
-                                <a href="https://www.instagram.com/uofglasgow?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a>
-                            </p>
+                                {% else %}
+                                    <p class = "btn btn-light mr-2 mt-3">
+                                        <a href="https://www.instagram.com/uofglasgow?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a>
+                                    </p>
+
+                                {% endif %}
+
+                                <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_website }}" target="_blank">Website</a></p>
+
+                            </div>
+
+                        
 
                         {% endif %}
-
-                        <p class = "btn btn-light mr-2 mt-3"><a href="{{ building.building_website }}" target="_blank">Website</a></p>
-
-                    </div>
+                    
+                    </div>                    
 
                 </div>
             </div>
@@ -56,38 +98,11 @@
                     <p><strong>This building has no rooms or none have been added yet.</strong></p>
                 {% endif %}
 
-                <script>
-                    var acc = document.getElementsByClassName("accordion");
-                    var i;
-                    for (i = 0; i < acc.length; i++) {
-                        acc[i].addEventListener("click", function() {
-                            this.classList.toggle("active");
-                            var panel = this.nextElementSibling;
-                            if(panel.style.maxHeight){
-                                panel.style.maxHeight = null;
-                            } else{
-                                panel.style.maxHeight = panel.scrollHeight + "px";
-                            }
-                    });
-                }
-                </script>
             </div>
 
 
-
     
-            <div id = "map">
-
-                <script>
-                    function initMap() {
-                        let location = {lat: {{ latitude }}, lng: {{ longtitude }}};
-                        let map = new google.maps.Map(
-                            document.getElementById('map'), {zoom: 17, center: location}
-                            );
-
-                        let marker = new google.maps.Marker({position: location, map: map})
-                    }
-                </script>
+            <div id = "map" langitude = "{{ langitude }}" longitude = "{{ longitude }}">
 
                 {% if building.google_map %}
 
@@ -96,7 +111,8 @@
 
                 {% endif %}
 
-        </div>
+            </div>
+            
 
         <div class="divider"></div>
 
