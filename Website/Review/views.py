@@ -56,6 +56,15 @@ def buildings(request):
     return render(request, 'Review/buildings.html', context)
 
 
+def building_profile(request, slug):
+    building = get_object_or_404(Building, slug=slug)
+    context = {
+        'building': building,
+        
+    }
+    return render(request, 'Review/building_profile.html', context)
+
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -100,14 +109,6 @@ def gallery(request):
     context = {"isactive": "gallery"}
     return render(request, 'Review/gallery.html', context)
 
-
-def building_profile(request, slug):
-    building = get_object_or_404(Building, slug=slug)
-    context = {
-        'building': building,
-        # 'comments': comments,  # Uncomment if you're including comments
-    }
-    return render(request, 'Review/building_profile.html', context)
 
 
 def new_building(request):
@@ -171,16 +172,6 @@ def profile(request):
         
     return render(request, 'Review/profile.html', context_dict)
 
-    # This view now requires the user to be logged in
-    # if request.user.is_authenticated:
-    # user_comments = Comment.objects.filter(user=request.user)
-    # context = {'comments': user_comments}
-    # return render(request, 'profile.html', context)
-    # else:
-    # return redirect('login')
-
-    # return render(request, 'Review/profile.html', context)
-
 
 @login_required
 def edit_profile(request):
@@ -201,7 +192,7 @@ def edit_profile(request):
 
     return render(request, 'Review/edit_profile.html', {'form': form})
 
-# @login_required
+
 
 
 def upload_media(request):

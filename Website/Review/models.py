@@ -19,7 +19,6 @@ class Building(models.Model):
     building_instagram = models.URLField(blank = True, default = "https://www.instagram.com/uofglasgow?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==")
     building_website = models.URLField(blank = True)
     
-    building_views = models.IntegerField(default = 0)
     building_likes = models.IntegerField(default = 0)
     building_dislikes = models.IntegerField(default = 0)
 
@@ -48,8 +47,6 @@ class BuildingRooms(models.Model):
     room_title = models.CharField(max_length = 225)
     room_picture = models.ImageField(upload_to = "room_images", blank = True, default = "")
     
-    room_views = models.IntegerField(default = 0)
-    room_likes = models.IntegerField(default = 0)
     
     
     class Meta:
@@ -79,10 +76,8 @@ class Comment(models.Model):
 
 class Profile(models.Model):
 
-    # profile_ID = models.CharField(max_length=100, unique=True)
-    # user_ID = models.CharField(max_length=100, unique=True))
     name = models.CharField(max_length=80)
-    user = models.OneToOneField( #I think this line of code already indicates the foreign key and will do the auto-matching, so no need for user_id
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile', null=True)
     picture = models.ImageField(
         upload_to="profile_images", blank=True, default = "profile_images/placeholder.jpg")

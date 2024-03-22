@@ -8,12 +8,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('name', 'picture', 'bio', 'reviews')
-        # labels = {
-        #     'name': 'Full Name',
-        #     'picture': 'Profile Picture',
-        #     'bio': 'Bio',
-        #     'reviews': 'Reviews',
-        # }
+        
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 4}),
         }
