@@ -1,7 +1,7 @@
-from datetime import timezone
+from django.utils import timezone
 from django.test import TestCase
 from django.urls import reverse
-from .models import Building, BuildingRooms, Comment
+from .models import Building, BuildingRooms, Comment, Profile
 from django.contrib.auth.models import User
 
 
@@ -196,10 +196,66 @@ class BuildingRoomsTest(TestCase):
         self.assertEqual(room.room_title, "Room 207")
         self.assertEqual(room.room_picture, "file_dir/room_image.jpg")
         self.assertEqual(room.building, building)
+
+
+
+class ProfileTest(TestCase):
+
+    """
+        This tests the MODEL Profile in Review/models.py
+    """
+
+    def test_profile_creates_objects_successfully(self):
+
+        """
+            This tests to make sure that the Profile model successfully creates objects.
+        """
+
+        user = add_user("Robert Smith")
+
+        profile = Profile(name = "Robert Smith",
+                          picture = "file_dir/profile_images/profile.jpg",
+                          bio = "I am Robert.",
+                          reviews = "This is a review",
+                          user = user)
         
+
+        self.assertEqual(profile.name, "Robert Smith")
+        self.assertEqual(profile.picture, "file_dir/profile_images/profile.jpg")
+        self.assertEqual(profile.bio, "I am Robert.")
+        self.assertEqual(profile.reviews, "This is a review")
+        self.assertEqual(profile.user, user)
         
       
+
+class CommentTest(TestCase):
+
+    """
+        This tests the MODEL Comment in Review/models.py
+    """  
+
+    def test_comment_creates_objects_successfully(self):
+
+        """
+            This makes sure that the Comment model successfully creates new objects
+            of Comment type.
+        """
+
+        user = add_user("Smith Robert")
+        building = add_building("Robert Smith Building", "222, -222")
+
+        date_commented = timezone.now
+
+        comment = Comment(author = user,
+                          text = "this is a comment by Smith Robert",
+                          building = building,
+                          date_commented = date_commented)
         
+
+        self.assertEqual(comment.author, user)
+        self.assertEqual(comment.building, building)
+        self.assertEqual(comment.text, "this is a comment by Smith Robert")
+        self.assertEqual(comment.date_commented, date_commented)
         
         
 #Helper functions that don't need to be initialised within a class
