@@ -59,7 +59,7 @@ function initMap() {
     let longitude = parseFloat(mapElement.getAttribute('longitude'));
     
     //Create the location object
-    let location = {lat: latitude, lgn: longitude };
+    let location = {lat: latitude, lng: longitude };
     
     //Create the map and marker
     let map = new google.maps.Map(

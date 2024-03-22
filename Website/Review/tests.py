@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Building, BuildingRooms, Comment
 from django.contrib.auth.models import User
 
+
 class BuildingMethodTests(TestCase):
     
     def test_slug_line_creation(self):
@@ -76,10 +77,14 @@ class ShowBuildingViewTest(TestCase):
         """
             This is to test if the view correctly gets all objects required:
                 Building, BuildingRooms, and Comment
+                
+            And tests that the google_map variable is correctly split up
         """
         
         building = add_building("Adam Smith Building", 
                                 "55.873868697201004, -4.289791300542604")
+        
+        latitude, longitude = building.google_map.replace(" ", "").split(",")
         
         user = add_user("username1")
         
@@ -92,14 +97,18 @@ class ShowBuildingViewTest(TestCase):
                                            kwargs = {"building_name_slug": building.building_slug}))
         
         self.assertEqual(response.status_code, 200)
-        #self.assertContains(response, "Adam Smith Building")
-        #self.assertContains(response, "Room 101")
-        #self.assertContains(response, "This is a comment about the Adam Smith Building")   
+        self.assertContains(response, "Adam Smith Building")
+        self.assertContains(response, "Room 101")
+        self.assertContains(response, "This is a comment about the Adam Smith Building")   
         
-        #self.assertEqual(response.context["building"], "Adam Smith Building")
+        self.assertEqual(response.context["building"], building)
+        self.assertEqual(response.context["latitude"], latitude)
+        self.assertEqual(response.context["longitude"], longitude)
+#        
         
-        
-        
+
+
+  
         
         
 #Helper functions that don't need to be initialised within a class

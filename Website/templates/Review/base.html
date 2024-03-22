@@ -20,7 +20,6 @@
     <script src = "{% static "js/utils.js" %}" crossorigin = "anonymous"></script>
     
     
-    
 </head>
 <body>
     <header>
@@ -42,9 +41,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
                 </li>
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{% url 'building_search' %}">Search</a>#}
-{#                </li>#}
+
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
@@ -71,7 +68,7 @@
         {% endblock %}
     </main>
     
-
+    
 </body>
 <footer>
     <div class="footer">

@@ -275,9 +275,9 @@ def show_building(request, building_name_slug):
         context_dict["building"] = building
         
         
-        latitude, longitude = building.google_map.strip().split(',')
-        context_dict["latitude"] = float(latitude)
-        context_dict["longitude"] = float(longitude.strip())
+        latitude, longitude = building.google_map.replace(" ", "").split(',')
+        context_dict["latitude"] = latitude
+        context_dict["longitude"] = longitude
         
     except Building.DoesNotExist:
         
