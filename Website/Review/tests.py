@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 
 class BuildingMethodTests(TestCase):
     
+    """
+        These are tests for the Building MODEL in Review/models.py
+    """
+    
     def test_slug_line_creation(self):
         
         """
@@ -20,6 +24,34 @@ class BuildingMethodTests(TestCase):
         building.save()
         
         self.assertEqual(building.building_slug, "new-building-here")
+        
+        
+    def test_building_creation_stores_all_variables_correctly(self):
+        
+        """
+            This tests that when a new Building object is created that is successfully stores all of its variables:
+            
+                building_name, building_description_, building_instagram, building_website, building_image, google_map
+                            
+                building_likes, building_dislikes (these two are default values, so no need to initate them as that is what we want to test)
+        """
+        
+        building = Building(building_name = "JMS Building",
+                            building_description = "This is a new building on campus.",
+                            building_instagram = "https://www.instagram.com",
+                            building_website = "https://www.moodle.gla.ac.uk",
+                            google_map = "55.02, -4.567")
+        
+        building.save()
+        
+        self.assertEqual(building.building_description, "This is a new building on campus.")
+        self.assertEqual(building.building_name, "JMS Building")
+        self.assertEqual(building.building_instagram, "https://www.instagram.com")
+        self.assertEqual(building.building_website, "https://www.moodle.gla.ac.uk")
+        self.assertEqual(building.google_map, "55.02, -4.567")
+        
+        self.assertEqual(building.building_likes, 0)
+        self.assertEqual(building.building_dislikes, 0)
         
          
         
@@ -70,6 +102,9 @@ class ShowBuildingViewTest(TestCase):
     
     """
         THIS TESTS THE VIEW CALLED show_building in Review/views.py
+        
+        The BuildingRooms model is only utilised within this view as well, so this will
+        also make tests to show that the Buildingrooms model will correctly display within a view.
     """
     
     def test_view_gets_objects(self):
@@ -104,11 +139,67 @@ class ShowBuildingViewTest(TestCase):
         self.assertEqual(response.context["building"], building)
         self.assertEqual(response.context["latitude"], latitude)
         self.assertEqual(response.context["longitude"], longitude)
-#        
+    
+    
+    
+    def test_response_if_no_comments_added(self):
+        
+        """
+            This tests that when the wbesite loads this page from the correct path that
+            if there are no comments been added to the building, the page will show the appropriate message
+            and not cause the website to crash or have any errors
+        """
+        
+        building = add_building("I am a building", "1234, -234")
+        
+        response = self.client.get(reverse("Review:show_building",
+                                           kwargs = {"building_name_slug": building.building_slug}))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "There are currently no comments for this building.")
+        
+        
+    def test_no_rooms_allocated_to_building_response(self):
+        
+        """
+            This tests that if no rooms have been added to the building that the view
+            will show, that it will display an appropriate message to indicate this and not
+            cause any errors or crashes for the website.
+        """
+        
+        building = add_building("I am a building", "123, 456")
+        
+        response = self.client.get(reverse("Review:show_building",
+                                    kwargs = {"building_name_slug": building.building_slug}))
+        
+        self.assertContains(response, "This building has no rooms or none have been added yet.")      
         
 
 
-  
+
+class BuildingRoomsTest(TestCase):
+    
+    def test_room_creation_successful(self):
+        
+        """
+            This tests the MODEL BuildingRooms to make sure that objects are created successfully.
+            This model has a foreign key for a building, a char_field for it's title and a picture.
+        """
+        
+        building = Building(building_name = "Sir Building")
+        building.save()
+        
+        room = BuildingRooms(room_title = "Room 207", room_picture = "file_dir/room_image.jpg", building = building)
+        room.save()
+        
+        self.assertEqual(building.building_name, "Sir Building")
+        self.assertEqual(room.room_title, "Room 207")
+        self.assertEqual(room.room_picture, "file_dir/room_image.jpg")
+        self.assertEqual(room.building, building)
+        
+        
+      
+        
         
         
 #Helper functions that don't need to be initialised within a class
