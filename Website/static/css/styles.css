@@ -1,0 +1,145 @@
+css_content = """
+/* Home Page */
+.home-background {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    position: relative;
+}
+.title {
+    position: absolute;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+}
+
+/* Gallery Page */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+}
+.gallery-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.gallery-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* Edit Profile Page */
+.edit-profile-form {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 30px #5f6f7c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.edit-profile-form-item {
+    width: 100%;
+}
+.edit-profile-form-item label {
+    width: 100%;
+    padding: 8px 0;
+}
+.edit-profile-form-item input, .edit-profile-form-item textarea {
+    width: 100%;
+}
+
+/* Login Page */
+.login-container {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 30px #5f6f7c;
+}
+.login-form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 48px auto;
+}
+
+/* New Level & New Building Forms */
+.new-room-form, .new-building-form {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 30px #5f6f7c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Register Page */
+.register-container {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 30px #5f6f7c;
+}
+
+/* Profile Page */
+.profile-container {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 30px #5f6f7c;
+    display: flex;
+    flex-direction: column;
+}
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: auto;
+    text-align: center;
+
+}
+.comment-container {
+        text-align: left;
+        padding-left: 0; /* Adjust as needed */
+        margin-left: 0; /* Adjust as needed */
+        display: flex;
+        flex-direction: column;
+}
+.comment-profile-img {
+    width: 50px; /* Example size, adjust as needed */
+    height: auto;
+    border-radius: 50%; /* Circular images */
+    margin-right: 10px; /* Space between image and username */
+}
+.comment-author {
+    display: flex;
+    align-items: center; /* Aligns image and username */
+}
+
+"""

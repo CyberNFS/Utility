@@ -117,32 +117,23 @@
         <div class="divider"></div>
 
         {%  if comments %}
-
             {% for comment in comments %}
-
                 <div class="comment-container">
-                    <!-- Assuming the User model has a one-to-one relationship with Profile named 'profile' -->
-                    <div>
+                    <div class="comment-author">
                         {% if comment.author.profile.picture %}
                             <img src="{{ MEDIA_URL }}{{ comment.author.profile.picture }}" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
-
                         {% else %}
-                          <img src="{{ MEDIA_URL }}/profile_images/placeholder.jpg" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
-
+                            <img src="{{ MEDIA_URL }}/profile_images/placeholder.jpg" alt="{{ comment.author.username }}'s profile picture" class="comment-profile-img">
                         {% endif %}
-
-                        <span style="margin-left: 18px">{{ comment.author.username }}</span>
+                        <span>{{ comment.author.username }}</span>
                     </div>
-                    <p style="margin-top: 18px">{{ comment.text }}</p>
+                    <p>{{ comment.text }}</p>
                 </div>
-
             {% endfor %}
-
         {% else %}
-                <p>
-                    <strong>There are currently no comments for this building.</strong>
-                </p>
-
+            <p>
+                <strong>There are currently no comments for this building.</strong>
+            </p>
         {% endif %}
 
         <div class="divider"></div>

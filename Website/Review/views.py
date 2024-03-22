@@ -5,16 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth import login as auth_login
-from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm, RoomForm
+from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm, RoomForm, BuildingSearchForm
 from .models import Comment, Building, Profile, BuildingRooms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Building
-from .forms import BuildingSearchForm
-from django.db.models import Q
+from django.db.models import Prefetch, Q
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.urls import reverse
 from django.conf import settings
+
 
 def home(request):
     context = {"isactive": "home"}
@@ -22,27 +21,24 @@ def home(request):
 
 
 def buildings(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.author = request.user
-            # Ensure 'building_id' is captured and validated before this step
             building_id = request.POST.get('building_id')
-            if building_id:
-                try:
-                    new_comment.building = Building.objects.get(id=building_id)
-                    new_comment.save()
-                    return redirect('buildings')
-                except Building.DoesNotExist:
-                    # Handle the case where building does not exist
-                    pass
+            try:
+                new_comment.building = Building.objects.get(id=building_id)
+                new_comment.save()
+            except Building.DoesNotExist:
+                pass
+            return redirect('buildings')
     else:
-        comment_form = CommentForm()
-        
+        comment_form = CommentForm() if request.user.is_authenticated else None
+
     keywords = request.GET.get('keyword')
     if keywords:
-        buildings = Building.objects.filter(
+        buildings_query = Building.objects.filter(
             Q(building_name__icontains=keywords) |
             Q(building_description__icontains=keywords) |
             Q(google_map__icontains=keywords) |
@@ -50,9 +46,22 @@ def buildings(request):
             Q(building_website__icontains=keywords)
         )
     else:
-        buildings = Building.objects.all()
-    context = {'comment_form': comment_form, 'buildings': buildings, "isactive": "buildings"}
-    
+        buildings_query = Building.objects.all()
+
+    buildings = buildings_query.prefetch_related(
+        Prefetch(
+            'comments',
+            queryset=Comment.objects.order_by('-date_commented'),
+            to_attr='recent_comments'
+        )
+    )
+
+    context = {
+        'comment_form': comment_form if request.user.is_authenticated else None,
+        'buildings': buildings,
+        "isactive": "buildings"
+    }
+
     return render(request, 'Review/buildings.html', context)
 
 
@@ -60,7 +69,7 @@ def building_profile(request, slug):
     building = get_object_or_404(Building, slug=slug)
     context = {
         'building': building,
-        
+        'comments': comments,
     }
     return render(request, 'Review/building_profile.html', context)
 
@@ -79,7 +88,6 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    # Redirect to a success page.
     return redirect('home')
 
 
@@ -87,17 +95,13 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            # Create a new user object but avoid saving it yet
             new_user = User.objects.create_user(
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'],
-                # Include other fields as needed
                 email=form.cleaned_data['email']
             )
             new_user.save()
-            # Log the user in and redirect them
             login(request, new_user)
-            # Redirect to a new page after registration
             return redirect('Review:profile')
     else:
         form = RegistrationForm()
@@ -110,7 +114,6 @@ def gallery(request):
     return render(request, 'Review/gallery.html', context)
 
 
-
 def new_building(request):
     if request.method == 'POST':
         form = BuildingForm(request.POST, request.FILES)
@@ -118,7 +121,8 @@ def new_building(request):
             building = form.save(commit=False)
             building.google_map = request.POST.get('google_map')
             building.building_image = request.FILES.get('building_image')
-            building.building_description = request.POST.get('building_description')
+            building.building_description = request.POST.get(
+                'building_description')
             building.building_website = request.POST.get("building_website")
             # You can add additional processing here if needed
             building.save()
@@ -130,46 +134,43 @@ def new_building(request):
 
 # @login_required
 def new_level(request):
-    
+
     if request.method == "POST":
         form = RoomForm(request.POST, request.FILES)
-        
+
         if form.is_valid():
-            room = form.save(commit = False)
+            room = form.save(commit=False)
             room.room_title = request.POST.get("room_title")
             room.picture = request.FILES.get("room_picture")
             room.save()
-            
+
             return redirect("buildings")
-    
+
     else:
         form = RoomForm()
-        
-    return render(request, "Review/new_level.html", {"form": form})
-    
 
+    return render(request, "Review/new_level.html", {"form": form})
 
 
 def profile(request):
     # Fetch the comments made by the user and their related profiles
-    
+
     context_dict = {}
 
     user_comments = Comment.objects.select_related(
         'author__profile').filter(author=request.user)
-    
+
     try:
         profile = request.user.profile
-        
+
     except Profile.DoesNotExist:
-        profile = Profile(user = request.user)
-        
+        profile = Profile(user=request.user)
+
     finally:
         context_dict["profile"] = profile
-    
+
     context_dict["comments"] = user_comments
-    
-        
+
     return render(request, 'Review/profile.html', context_dict)
 
 
@@ -191,8 +192,6 @@ def edit_profile(request):
         form = ProfileForm(instance=request.user.profile)
 
     return render(request, 'Review/edit_profile.html', {'form': form})
-
-
 
 
 def upload_media(request):
@@ -247,84 +246,78 @@ def building_search(request):
     return render(request, 'Review/search_results.html', context)
 
 
-
 def show_building(request, building_name_slug):
-    
+
     context_dict = {}
-    
+
     try:
-        
-        building = Building.objects.get(building_slug = building_name_slug)
-        
-        rooms = BuildingRooms.objects.filter(building = building)
-        
+
+        building = Building.objects.get(building_slug=building_name_slug)
+
+        rooms = BuildingRooms.objects.filter(building=building)
+
         comments = building.comments.all()
-        
-        
+
         context_dict["comments"] = comments
         context_dict["rooms"] = rooms
         context_dict["building"] = building
-        
-        
+
         latitude, longitude = building.google_map.replace(" ", "").split(',')
         context_dict["latitude"] = latitude
         context_dict["longitude"] = longitude
-        
+
     except Building.DoesNotExist:
-        
+
         context_dict["building"] = None
         context_dict["rooms"] = None
-        
-    
-    return render(request, 'Review/building_profile.html', context = context_dict)
+
+    return render(request, 'Review/building_profile.html', context=context_dict)
+
 
 def gallery(request):
     buildings = Building.objects.all()
     return render(request, 'Review/gallery.html', {'buildings': buildings})
 
 
-
 class LikeBuildingView(View):
-    
+
     @method_decorator(login_required)
     def get(self, request):
-        
+
         building_name = request.GET['building_name']
-        
+
         try:
-            building = Building.objects.get(building_name = building_name)
-            
+            building = Building.objects.get(building_name=building_name)
+
         except Building.DoesNotExist:
             return HttpResponse(-1)
-        
+
         except ValueError:
             return HttpResponse(-1)
-        
+
         building.building_likes += 1
         building.save()
-        
+
         return HttpResponse(building.building_likes)
-    
-    
-    
+
+
 class DislikeBuildingView(View):
-    
+
     @method_decorator(login_required)
     def get(self, request):
-        
+
         building_name = request.GET['building_name']
-        
+
         try:
-            building = Building.objects.get(building_name = building_name)
-            
+            building = Building.objects.get(building_name=building_name)
+
         except Building.DoesNotExist:
             return HttpResponse(-1)
-        
+
         except ValueError:
             return HttpResponse(-1)
-        
+
         building.building_dislikes += 1
         building.save()
-        
-        return HttpResponse(building.building_dislikes)
 
+        return HttpResponse(building.building_dislikes)

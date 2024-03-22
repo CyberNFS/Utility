@@ -69,20 +69,30 @@
                             <p class="building-name">{{ building.building_name }}</p>
                         </a>
 
-                        {% if user.is_authenticated %}
+                        <!-- Display the top three comments for each building -->
+                        <div class="comments-section" style="margin-top: 12px; width: 80%;">
+                            {% with building.recent_comments|slice:":3" as recent_comments %}
+                                {% if recent_comments %}
+                                    {% for comment in recent_comments %}
+                                        <div class="comment">
+                                            <p><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</p>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No recent comments.</p>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
 
+                        {% if user.is_authenticated %}
                             <form method="post" action="{% url 'buildings' %}" style="margin-top: 12px; width: 80%;" class="comment-container">
                                 {% csrf_token %}
                                 {{ comment_form.as_p }}
                                 <input type="hidden" name="building_id" value="{{ building.id }}">
-
                                 <button type="submit" class="building-submit">Submit Comment</button>
                             </form>
-
                         {% endif %}
-
                     </div>
-
                 {% endfor %}
 
                 {% for comment in building.comments.all %}

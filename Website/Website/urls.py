@@ -26,28 +26,35 @@ urlpatterns = [
     path('Review/', include('Review.urls')),
     path('', views.home, name='home'),
     path('buildings/', views.buildings, name='buildings'),
-    
-    path('building/<slug:building_name_slug>/', views.show_building, name = "show_building"),
+
+
+    path('building/<slug:building_name_slug>/',
+         views.show_building, name="show_building"),
+
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),
-    
     path('gallery/', views.gallery, name='gallery'),
-    
     path('new_building/', views.new_building, name='new_building'),
     path('building/', views.building_profile, name='building_profile'),
-    
     path('new_level/', views.new_level, name='new_level'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit_profile', views.edit_profile, name='edit_profile'),
     path('upload_media/', views.upload_media, name='upload_media'),
-    
-    
+    # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('register/', views.register, name='register'),
     path('comment/', views.comment, name='comment'),
     path('about/', views.about, name='about'),
-    
     path('search/', views.building_search, name='building_search'),
+    path('about/', views.about, name='about'),
+    path('search/', views.building_search, name='building_search'),
+    path('building_profile/<slug:building_name_slug>/',
+         views.show_building, name="show_building"),
+    path('profile/', views.profile, name='profile'),
+    path('gallery/', views.gallery, name="gallery"),
+    path('like_building/', views.LikeBuildingView.as_view(), name="like_building"),
+    path('dislike_building/', views.DislikeBuildingView.as_view(),
+         name="dislike_building"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
