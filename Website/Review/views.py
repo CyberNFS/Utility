@@ -34,10 +34,11 @@ def home(request):
         like_count=Count('building_likes')).order_by('-like_count')[:3]
     try:
         recent_comment = Comment.objects.latest('date_commented')
+        recent_commented_building = recent_comment.building
     except Comment.DoesNotExist:
         recent_comment = None
+        recent_commented_building = None
 
-    recent_commented_building = recent_comment.building
     for building in top_liked_buildings:
         building.image_url = building.building_image.url if building.building_image else None
 

@@ -27,7 +27,7 @@ MEDIA_ROOT = MEDIA_DIR
 SECRET_KEY = 'hdftp_7k9xm*+fs(d2+*9li*$*z8iesm_&p1po9^k5fu0^r$k0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['Capitalist.pythonanywhere.com']
 
