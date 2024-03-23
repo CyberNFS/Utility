@@ -8,49 +8,38 @@
     <h2>Most Liked Buildings</h2>
     <div class="building-page-container">
         {% for building in top_liked_buildings %}
-
-                <div class="building-information-item">
-
-                    <a href="/Review/building_profile/{{ building.building_slug }}/" style="display: flex; position: relative; width: 100%; height: max-content">
-                        <img src="{{ MEDIA_URL }}{{ building.building_image }}" class = building-picture alt="{{ building.building_name }}">
-                        <p class="building-name">{{ building.building_name }}</p>
-
-                    </a>
-                    <div class building-information>
-                        <p class="likes-count">Likes: {{ building.like_count }}</p>
-                    </div>
-
-                    <!-- Display the top three comments for each building -->
-                    <div class="comments-section" style="margin-top: 12px; width: 80%;">
-                        {% with building.recent_comments|slice:":3" as recent_comments %}
-                            {% if recent_comments %}
-                                {% for comment in recent_comments %}
-                                    <div class="comment">
-                                        <p><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</p>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <p>No recent comments.</p>
-                            {% endif %}
-                        {% endwith %}
-                    </div>
-
-                    {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'buildings' %}">
-                            {% csrf_token %}
-                            {{ comment_form.as_p }}
-                            <input type="hidden" name="building_id" value="{{ building.id }}">
-                            <input type="hidden" name="next" value="{% url 'home' %}">
-                            <button type="submit" class="building-submit">Submit Comment</button>
-                        </form>
-                    {% endif %}
+            <div class="building-information-item">
+                <a href="/Review/building_profile/{{ building.building_slug }}/" style="display: flex; position: relative; width: 100%; height: max-content">
+                    <img src="{{ MEDIA_URL }}{{ building.building_image }}" class="building-picture" alt="{{ building.building_name }}">
+                    <p class="building-name">{{ building.building_name }}</p>
+                </a>
+                <div class="building-information">
+                    <p class="likes-count">Likes: {{ building.like_count }}</p>
                 </div>
-            {% endfor %}
-                        <!-- </div> -->
-
-
-
-
+                <!-- Display the top three comments for each building -->
+                <div class="comments-section" style="margin-top: 12px; width: 80%;">
+                    {% with building.recent_comments|slice:":3" as recent_comments %}
+                        {% if recent_comments %}
+                            {% for comment in recent_comments %}
+                                <div class="comment">
+                                    <p><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</p>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No recent comments.</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'home' %}">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <input type="hidden" name="building_id" value="{{ building.id }}">
+                        <button type="submit" class="building-submit">Submit Comment</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

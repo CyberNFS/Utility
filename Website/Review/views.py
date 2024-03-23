@@ -27,7 +27,7 @@ def home(request):
                 new_comment.save()
             except Building.DoesNotExist:
                 pass
-            return redirect('buildings')
+            return redirect('home')
     else:
         comment_form = CommentForm() if request.user.is_authenticated else None
     top_liked_buildings = Building.objects.annotate(
