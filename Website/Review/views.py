@@ -8,7 +8,7 @@ from django.contrib.auth import login as auth_login
 from .forms import CommentForm, RegistrationForm, BuildingForm, ProfileForm, RoomForm, BuildingSearchForm
 from .models import Comment, Building, Profile, BuildingRooms
 from django.contrib.auth.forms import AuthenticationForm
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch, Q, Count, Max
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.urls import reverse
@@ -16,7 +16,37 @@ from django.conf import settings
 
 
 def home(request):
-    context = {"isactive": "home"}
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.author = request.user
+            building_id = request.POST.get('building_id')
+            try:
+                new_comment.building = Building.objects.get(id=building_id)
+                new_comment.save()
+            except Building.DoesNotExist:
+                pass
+            return redirect('buildings')
+    else:
+        comment_form = CommentForm() if request.user.is_authenticated else None
+    top_liked_buildings = Building.objects.annotate(
+        like_count=Count('building_likes')).order_by('-like_count')[:3]
+    recent_comment = Comment.objects.latest('date_commented')
+    recent_commented_building = recent_comment.building
+    for building in top_liked_buildings:
+        building.image_url = building.building_image.url if building.building_image else None
+
+    if recent_commented_building:
+        recent_commented_building.image_url = recent_commented_building.building_image.url if recent_commented_building.building_image else None
+        recent_comment.image_url = recent_comment.author.profile.picture.url if recent_comment.author.profile.picture else None
+    context = {
+        "isactive": "home",
+        "top_liked_buildings": top_liked_buildings,
+        "recent_comment": recent_comment,
+        "recent_commented_building": recent_commented_building,
+        'comment_form': comment_form if request.user.is_authenticated else None,
+    }
     return render(request, 'Review/home.html', context)
 
 
@@ -114,6 +144,7 @@ def gallery(request):
     return render(request, 'Review/gallery.html', context)
 
 
+@login_required
 def new_building(request):
     if request.method == 'POST':
         form = BuildingForm(request.POST, request.FILES)
@@ -132,7 +163,7 @@ def new_building(request):
     return render(request, 'Review/new_building.html', {'form': form})
 
 
-# @login_required
+@login_required
 def new_level(request):
 
     if request.method == "POST":
@@ -152,9 +183,8 @@ def new_level(request):
     return render(request, "Review/new_level.html", {"form": form})
 
 
+@login_required
 def profile(request):
-    # Fetch the comments made by the user and their related profiles
-
     context_dict = {}
 
     user_comments = Comment.objects.select_related(
@@ -194,11 +224,13 @@ def edit_profile(request):
     return render(request, 'Review/edit_profile.html', {'form': form})
 
 
+@login_required
 def upload_media(request):
     context = {}
     return render(request, 'Review/upload_media.html', context)
 
 
+@login_required
 def comment(request):
     form = CommentForm()
     if request.method == 'POST':

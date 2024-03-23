@@ -23,7 +23,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top {% if isactive != 'home' %}nothome{% endif %}" id="navbar">
+        <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top" id="navbar">
           <div class="container-fluid">
             <img class="navbar-brand logo"  src="{% static 'images\logo.jpg' %}" alt="Logo"></img>
             <button id="navbar-btn"class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
         </nav>
     </header>
 
-    <main class="{% if isactive != 'home' %} content-container{% endif %}">
+    <main class="{% if isactive != 'home' %}content-container{% else %}homepage-container{% endif %}">
         {% block content %}
         <!-- Content overridden in child templates -->
         {% endblock %}

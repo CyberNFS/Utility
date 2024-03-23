@@ -1,61 +1,16 @@
 {% extends 'Review/base.html' %}
 
-{% block title %}Facilities | Utility Website{% endblock %}
+{% block title %}Facilities | Unity {% endblock %}
 
 {% block content %}
 
-<style>
-    .comment-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-    }
-    
-    .building-information-item{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
 
-    .building-picture{
-        width: 80%;
-        height: 80%;
-        margin: auto;
-        text-align: center;
-    }
-    .building-name{
-        position: absolute;
-        right: 10%;
-        bottom: 0;
-        padding: 0.5rem 1rem;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        font-size: 18px;
-        max-width: 80%;
-        overflow: hidden;
-        word-break: break-all;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .form_control{
-        width: 100%;
-        margin: 0 auto;
-    }
-    .comment-container p {
-        width: 100%;
-        text-align: center;
-}
-
-</style>
 
 
 {#<h2>Buildings Page</h2>#}
 <!-- Content specific to the Buildings page -->
     <div class="template-page-container">
+        <h2>Facilities</h2>
         <div class="building-page-container">
 
             {% if buildings %}

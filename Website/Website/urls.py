@@ -37,6 +37,8 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
     path('new_building/', views.new_building, name='new_building'),
     path('building/', views.building_profile, name='building_profile'),
+    path('building/<slug:building_slug>/',
+         views.building_profile, name='building_profile'),
     path('new_level/', views.new_level, name='new_level'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit_profile', views.edit_profile, name='edit_profile'),

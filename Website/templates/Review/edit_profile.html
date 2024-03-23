@@ -1,36 +1,6 @@
 {% extends 'Review/base.html' %}
 {% load static %}
 {% block content %}
-    <style>
-        .edit-profile-form{
-            width: 100%;
-            margin-top: 24px;
-            margin-bottom: 24px;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 30px #5f6f7c;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .edit-profile-form-item {
-            width: 100%;
-        }
-        .edit-profile-form-item label{
-            width: 100%;
-            padding: 8px 0;
-        }
-        .edit-profile-form-item input, .edit-profile-form-item textarea{
-            width: 100%;
-        }
-        .editprofile-background {
-            background-image: url('{% static "images/E0000_15.jpg" %}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            positon: relative;
-        }
-    </style>
     <div class="template-page-container">
         <h2>Edit Profile</h2>
         <form method="post" enctype="multipart/form-data" class="edit-profile-form editprofile-background">

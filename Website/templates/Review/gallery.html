@@ -1,6 +1,6 @@
 {% extends 'Review/base.html' %}
-
-{% block title %}Gallery | Utility Website{% endblock %}
+{% load static %}
+{% block title %}Gallery | Unity{% endblock %}
 
 {% block content %}
 <style>
@@ -22,16 +22,17 @@
         object-fit: cover;
     }
 </style>
-
-<h2>Gallery</h2>
-<div class="gallery-container">
-    {% for building in buildings %}
-        {% if building.building_image %}
-            <div class="gallery-item">
-                <img src="{{ building.building_image.url }}" alt="{{ building.building_name }}" class="gallery-image">
-                <p>{{ building.building_name }}</p>
-            </div>
-        {% endif %}
-    {% endfor %}
+<div class="template-page-container">
+    <h2>Gallery</h2>
+    <div class="gallery-container">
+        {% for building in buildings %}
+            {% if building.building_image %}
+                <div class="gallery-item">
+                    <img src="{{ building.building_image.url }}" alt="{{ building.building_name }}" class="gallery-image">
+                    <p>{{ building.building_name }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
