@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Review',
-    'bootstrap5',# pip install django-bootstrap-v5
+    'bootstrap5',  # pip install django-bootstrap-v5
 ]
 
 MIDDLEWARE = [
@@ -125,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = STATIC_URL
 STATICFILES_DIRS = [STATIC_DIR, ]
 
 MEDIA_ROOT = MEDIA_DIR
