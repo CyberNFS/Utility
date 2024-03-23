@@ -32,7 +32,11 @@ def home(request):
         comment_form = CommentForm() if request.user.is_authenticated else None
     top_liked_buildings = Building.objects.annotate(
         like_count=Count('building_likes')).order_by('-like_count')[:3]
-    recent_comment = Comment.objects.latest('date_commented')
+    try:
+        recent_comment = Comment.objects.latest('date_commented')
+    except Comment.DoesNotExist:
+        recent_comment = None
+
     recent_commented_building = recent_comment.building
     for building in top_liked_buildings:
         building.image_url = building.building_image.url if building.building_image else None
