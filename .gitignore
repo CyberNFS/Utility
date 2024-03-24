@@ -1,3 +1,6 @@
+staticfiles/
+static/admin/
+media/
 __pychache__/
 .DS_Store
 *.pyc
